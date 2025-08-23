@@ -1,143 +1,338 @@
 import Header from "@/components/Header";
 import { colors } from "@/constants/Colors";
+import { uri } from "@/utils/uri";
 import { Button } from "@react-navigation/elements";
 import React from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function Translator() {
-  const [translateToBisaya, setTranslateToBisaya] = React.useState(true);
   const [incomingText, setIncomingText] = React.useState("");
+  const [translatedToBisaya, setTranslatedToBisaya] = React.useState(false);
   const [translatedText, setTranslatedText] = React.useState("");
+  const [isSentence, setIsSentence] = React.useState(false);
+  const [sentenceExampleOriginal, setSentenceExampleOriginal] =
+    React.useState("");
+  const [sentenceExampleTranslated, setSentenceExampleTranslated] =
+    React.useState("");
+  const [isError, setIsError] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const translate = async () => {
-    if (!incomingText.trim()) return;
-
-    const sl = translateToBisaya ? "en" : "ceb";
-    const tl = translateToBisaya ? "ceb" : "en";
-
+    if (!incomingText.trim() || isLoading) return;
+    setIsError(false);
+    setMessage("");
+    setIsLoading(true);
     try {
-      const res = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(
-          incomingText.trim()
-        )}`
-      );
-      const data = (await res.json()) as any;
-      const text =
-        Array.isArray(data) && Array.isArray(data[0])
-          ? data[0].map((chunk: any[]) => chunk?.[0]).join("")
-          : "";
-      setTranslatedText(text ?? "");
+      type TranslationResult = {
+        translateToBisaya: boolean;
+        translatedText: string;
+        isSentence: boolean;
+        sentenceExampleOriginal: string | null;
+        sentenceExampleTranslated: string | null;
+        isError?: boolean;
+        message?: string;
+      };
+
+      const response = await fetch(`${uri}/openaitranslate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: incomingText }),
+      });
+
+      const data = (await response.json()) as { data: string };
+
+      const parsed = JSON.parse(data.data) as TranslationResult;
+
+      if (parsed.isError) {
+        setIsError(true);
+        setMessage(parsed.message ?? "Failed to translate");
+        setTranslatedText("");
+        setSentenceExampleOriginal("");
+        setSentenceExampleTranslated("");
+      } else {
+        setTranslatedToBisaya(parsed.translateToBisaya);
+        setTranslatedText(parsed.translatedText);
+        setIsSentence(parsed.isSentence);
+        setSentenceExampleOriginal(parsed.sentenceExampleOriginal ?? "");
+        setSentenceExampleTranslated(parsed.sentenceExampleTranslated ?? "");
+      }
     } catch {
-      setTranslatedText("Translation failed. Please try again.");
+      setIsError(true);
+      setMessage("Translation failed. Please try again.");
+      setTranslatedText("");
+      setSentenceExampleOriginal("");
+      setSentenceExampleTranslated("");
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const clearAll = () => {
+    setIncomingText("");
+    setTranslatedText("");
+    setSentenceExampleOriginal("");
+    setSentenceExampleTranslated("");
+    setIsSentence(false);
+    setIsError(false);
+    setMessage("");
+  };
+
+  const sayOutLoud = async (text: string) => {
+    try {
+      const response = await fetch(`${uri}/tts`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+
+      const arrayBuffer = await response.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+      const url = URL.createObjectURL(blob);
+
+      // Play audio
+      const audio = new Audio(url);
+      audio.play();
+    } catch (err) {
+      console.error("TTS failed:", err);
+    }
+  };
+
+  const direction = translatedToBisaya
+    ? "English → Bisaya"
+    : "Bisaya → English";
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.cream["500"] }}>
       <Header />
-
-      <View
-        style={{
-          backgroundColor: colors.white["500"],
-          borderRadius: "15px",
-          borderWidth: 1,
-          borderColor: colors.green["900"],
-          paddingHorizontal: 16,
-          paddingTop: 12,
-          paddingBottom: 10,
-          gap: 10,
-          margin: 20,
-        }}
-      >
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
+            backgroundColor: colors.white["500"],
+            borderRadius: 15,
+            borderWidth: 1,
+            borderColor: colors.green["900"],
+            paddingHorizontal: 16,
+            paddingTop: 12,
+            paddingBottom: 12,
+            gap: 10,
           }}
         >
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "600",
-              color: colors.orange["500"],
-            }}
-          >
-            Enter Sentence
-          </Text>
-
-          <Pressable
-            onPress={() => setTranslateToBisaya((v) => !v)}
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
-              gap: 8,
-              paddingHorizontal: 10,
-              paddingVertical: 6,
-              borderRadius: 10,
-              backgroundColor: colors.cream["400"],
-              borderWidth: 1,
-              borderColor: colors.green["500"],
+              justifyContent: "space-between",
             }}
           >
             <Text
               style={{
-                fontSize: 12,
-                color: colors.green["500"],
-                fontWeight: "600",
+                fontSize: 20,
+                fontWeight: "700",
+                color: colors.orange["500"],
               }}
             >
-              {translateToBisaya ? "EN → CEB" : "CEB → EN"}
+              Enter Sentence
             </Text>
-          </Pressable>
-        </View>
+            <Text style={{ fontSize: 12, color: colors.green["700"] }}>
+              {direction}
+            </Text>
+          </View>
 
-        <TextInput
-          style={{
-            backgroundColor: colors.cream["300"],
-            borderWidth: 1,
-            borderColor: colors.green["500"],
-            borderRadius: 12,
-            paddingHorizontal: 12,
-            paddingVertical: 10,
-            fontSize: 16,
-          }}
-          onSubmitEditing={translate}
-          onChangeText={setIncomingText}
-          value={incomingText}
-          placeholder="Type a word or sentence..."
-          placeholderTextColor={colors.green["500"]}
-          multiline
-        />
-
-        <View style={{ flexDirection: "row", gap: 10 }}>
-          <Button
+          <TextInput
             style={{
-              backgroundColor: colors.orange["500"],
-              paddingHorizontal: 14,
-              paddingVertical: 10,
+              backgroundColor: colors.cream["300"],
+              borderWidth: 1,
+              borderColor: colors.green["500"],
               borderRadius: 12,
+              paddingHorizontal: 12,
+              paddingVertical: 10,
+              fontSize: 16,
+              minHeight: 60,
             }}
-            onPress={translate}
-            color={colors.white["500"]}
-          >
-            Translate
-          </Button>
+            onSubmitEditing={translate}
+            onChangeText={setIncomingText}
+            value={incomingText}
+            placeholder="Type a word or sentence..."
+            placeholderTextColor={colors.green["500"]}
+            multiline
+            returnKeyType="send"
+          />
+
+          <View style={{ flexDirection: "row", columnGap: 10 }}>
+            <Button
+              style={{
+                backgroundColor: colors.orange["500"],
+                paddingHorizontal: 14,
+                paddingVertical: 10,
+                borderRadius: 12,
+                opacity: isLoading ? 0.7 : 1,
+              }}
+              onPress={translate}
+              disabled={isLoading || !incomingText.trim()}
+              color={colors.white["500"]}
+            >
+              {isLoading ? "Translating..." : "Translate"}
+            </Button>
+            <Button
+              style={{
+                backgroundColor: colors.green["500"],
+                paddingHorizontal: 14,
+                paddingVertical: 10,
+                borderRadius: 12,
+              }}
+              onPress={clearAll}
+              color={colors.white["500"]}
+            >
+              Clear
+            </Button>
+          </View>
+
+          {isLoading ? (
+            <View style={{ paddingVertical: 8 }}>
+              <ActivityIndicator />
+            </View>
+          ) : null}
+
+          {isError ? (
+            <View
+              style={{
+                backgroundColor: colors.orange["100"],
+                borderColor: colors.orange["500"],
+                borderWidth: 1,
+                borderRadius: 10,
+                padding: 10,
+              }}
+            >
+              <Text style={{ color: colors.orange["700"], fontSize: 14 }}>
+                {message}
+              </Text>
+            </View>
+          ) : null}
+
+          {translatedText ? (
+            <View
+              style={{
+                marginTop: 6,
+                backgroundColor: colors.cream["100"],
+                borderRadius: 12,
+                borderWidth: 1,
+                borderColor: colors.green["300"],
+                padding: 12,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: colors.green["700"],
+                  marginBottom: 6,
+                }}
+              >
+                Result
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: colors.orange["700"],
+                  fontWeight: "600",
+                  marginBottom: 10,
+                }}
+              >
+                {translatedText}
+              </Text>
+              <Button
+                style={{
+                  backgroundColor: colors.green["500"],
+                  paddingHorizontal: 14,
+                  paddingVertical: 10,
+                  borderRadius: 12,
+                }}
+                onPress={() =>
+                  sayOutLoud(translatedToBisaya ? translatedText : incomingText)
+                }
+                color={colors.white["500"]}
+              >
+                Say Out Loud
+              </Button>
+            </View>
+          ) : null}
+
+          {!isSentence &&
+          translatedText &&
+          sentenceExampleOriginal &&
+          sentenceExampleTranslated ? (
+            <View
+              style={{
+                marginTop: 10,
+                backgroundColor: colors.white["500"],
+                borderRadius: 12,
+                borderWidth: 1,
+                borderColor: colors.green["300"],
+                padding: 12,
+                rowGap: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "700",
+                  color: colors.orange["500"],
+                }}
+              >
+                Usage Example
+              </Text>
+              <View
+                style={{
+                  backgroundColor: colors.cream["300"],
+                  borderRadius: 10,
+                  padding: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: colors.green["700"],
+                    marginBottom: 4,
+                  }}
+                >
+                  Original
+                </Text>
+                <Text style={{ fontSize: 16, color: colors.green["900"] }}>
+                  {sentenceExampleOriginal}
+                </Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: colors.cream["300"],
+                  borderRadius: 10,
+                  padding: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: colors.green["700"],
+                    marginBottom: 4,
+                  }}
+                >
+                  Translation
+                </Text>
+                <Text style={{ fontSize: 16, color: colors.green["900"] }}>
+                  {sentenceExampleTranslated}
+                </Text>
+              </View>
+            </View>
+          ) : null}
         </View>
 
-        {translatedText ? (
-          <Text
-            numberOfLines={2}
-            style={{
-              marginTop: 2,
-              fontSize: 14,
-              color: colors.orange["500"],
-            }}
-          >
-            Preview: {translatedText}
-          </Text>
-        ) : null}
-      </View>
+        <View style={{ height: 40 }} />
+      </ScrollView>
     </View>
   );
 }

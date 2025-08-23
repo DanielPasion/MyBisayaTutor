@@ -27,6 +27,7 @@ export default function Header() {
           style={{
             width: 50,
             height: 50,
+            borderRadius: "15px",
           }}
         />
         <Text
