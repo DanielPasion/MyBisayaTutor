@@ -55,6 +55,9 @@ export default function Translator() {
 
   const guessTranslation = async () => {
     setGuessing(true);
+    if (!guess) {
+      return;
+    }
     const response = await fetch(`${uri}/openaiguess`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
