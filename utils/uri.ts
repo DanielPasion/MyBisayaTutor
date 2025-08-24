@@ -1,2 +1,2 @@
-export const uri = "http://localhost:3000";
-// export const uri = "https://mbtserver.onrender.com";
+// export const uri = "http://localhost:3000";
+export const uri = "https://mbtserver.onrender.com";
