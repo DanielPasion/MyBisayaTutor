@@ -1,4 +1,5 @@
 import { colors } from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
@@ -21,6 +22,9 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
         }}
       />
 
@@ -28,6 +32,19 @@ export default function TabLayout() {
         name="translator"
         options={{
           title: "Translator",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="book-outline" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="listening"
+        options={{
+          title: "Listening",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="headset-outline" color={color} size={size} />
+          ),
         }}
       />
     </Tabs>
