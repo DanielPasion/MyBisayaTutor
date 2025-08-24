@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import { colors } from "@/constants/Colors";
+import { sayOutLoud } from "@/utils/say-out-loud";
 import { uri } from "@/utils/uri";
 import { Button } from "@react-navigation/elements";
 import React from "react";
@@ -84,26 +85,6 @@ export default function Translator() {
     setMessage("");
   };
 
-  const sayOutLoud = async (text: string) => {
-    try {
-      const response = await fetch(`${uri}/tts`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-
-      const arrayBuffer = await response.arrayBuffer();
-      const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-      const url = URL.createObjectURL(blob);
-
-      // Play audio
-      const audio = new Audio(url);
-      audio.play();
-    } catch (err) {
-      console.error("TTS failed:", err);
-    }
-  };
-
   const direction = translatedToBisaya
     ? "English → Bisaya"
     : "Bisaya → English";
@@ -138,7 +119,7 @@ export default function Translator() {
                 color: colors.orange["500"],
               }}
             >
-              Enter Sentence
+              Enter Phrase
             </Text>
             <Text style={{ fontSize: 12, color: colors.green["700"] }}>
               {direction}
