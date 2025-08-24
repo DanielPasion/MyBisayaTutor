@@ -1,4 +1,3 @@
-import { Audio } from "expo-av";
 import React, { useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import Svg, { Rect } from "react-native-svg";
@@ -8,42 +7,38 @@ interface AudioPlayerProps {
 }
 
 export default function AudioPlayer({ uri }: AudioPlayerProps) {
-  const sound = useRef<Audio.Sound | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  // const [duration, setDuration] = useState(1);
 
   useEffect(() => {
-    const loadSound = async () => {
-      const { sound: newSound } = await Audio.Sound.createAsync(
-        { uri },
-        { shouldPlay: false },
-        onPlaybackStatusUpdate
-      );
-      sound.current = newSound;
-    };
-    loadSound();
-    return () => {
-      if (sound.current) {
-        sound.current.unloadAsync();
+    const audio = new Audio(uri);
+    audioRef.current = audio;
+
+    const updateProgress = () => {
+      if (audio.duration > 0) {
+        setProgress(audio.currentTime / audio.duration);
       }
+    };
+
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("ended", () => setIsPlaying(false));
+
+    return () => {
+      audio.pause();
+      audio.removeEventListener("timeupdate", updateProgress);
+      audioRef.current = null;
     };
   }, [uri]);
 
-  const onPlaybackStatusUpdate = (status: any) => {
-    if (status.isLoaded) {
-      // setDuration(status.durationMillis || 1);
-      setProgress(status.positionMillis / (status.durationMillis || 1));
-      setIsPlaying(status.isPlaying);
-    }
-  };
-
   const togglePlay = async () => {
-    if (!sound.current) return;
+    if (!audioRef.current) return;
     if (isPlaying) {
-      await sound.current.pauseAsync();
+      await audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      await sound.current.playAsync();
+      await audioRef.current.play();
+      setIsPlaying(true);
     }
   };
 
@@ -81,7 +76,7 @@ export default function AudioPlayer({ uri }: AudioPlayerProps) {
         </Text>
       </TouchableOpacity>
 
-      {/* Waveform / Progress Bar */}
+      {/* Progress Bar */}
       <Svg height="40" width="100%" style={{ marginTop: 10 }}>
         <Rect x="0" y="15" width="100%" height="10" rx="5" fill="#ddd" />
         <Rect
@@ -93,12 +88,6 @@ export default function AudioPlayer({ uri }: AudioPlayerProps) {
           fill="#f97316"
         />
       </Svg>
-
-      {/* Time Display */}
-      {/* <Text style={{ marginTop: 6, color: "#555" }}>
-        {Math.floor((progress * duration) / 1000)}s /{" "}
-        {Math.floor(duration / 1000)}s
-      </Text> */}
     </View>
   );
 }
