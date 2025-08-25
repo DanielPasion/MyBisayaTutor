@@ -1,49 +1,75 @@
-import { Audio } from "expo-av";
+import { AudioPlayer, createAudioPlayer } from "expo-audio";
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Platform, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Rect } from "react-native-svg";
 
 interface AudioPlayerProps {
   uri: string; // audio file URL or local path
 }
 
-export default function AudioPlayer({ uri }: AudioPlayerProps) {
-  const sound = useRef<Audio.Sound | null>(null);
+export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
+  const audioRef = useRef<HTMLAudioElement | AudioPlayer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  // const [duration, setDuration] = useState(1);
 
   useEffect(() => {
-    const loadSound = async () => {
-      const { sound: newSound } = await Audio.Sound.createAsync(
-        { uri },
-        { shouldPlay: false },
-        onPlaybackStatusUpdate
-      );
-      sound.current = newSound;
-    };
-    loadSound();
-    return () => {
-      if (sound.current) {
-        sound.current.unloadAsync();
-      }
-    };
+    if (Platform.OS === "web") {
+      const audio = new Audio(uri);
+      audioRef.current = audio;
+
+      const updateProgress = () => {
+        if (audio.duration > 0) {
+          setProgress(audio.currentTime / audio.duration);
+        }
+      };
+
+      audio.addEventListener("timeupdate", updateProgress);
+      audio.addEventListener("ended", () => setIsPlaying(false));
+      return () => {
+        audio.pause();
+        audio.removeEventListener("timeupdate", updateProgress);
+        audioRef.current = null;
+      };
+    } else {
+      const player = createAudioPlayer(uri);
+      audioRef.current = player;
+
+      const interval = setInterval(() => {
+        if (player.duration > 0) {
+          setProgress(player.currentTime / player.duration);
+        }
+
+        if (!player.playing && player.currentTime >= player.duration) {
+          setIsPlaying(false);
+        }
+      }, 500);
+
+      return () => {
+        setIsPlaying(false);
+        clearInterval(interval);
+        player.pause();
+        player.remove();
+        audioRef.current = null;
+      };
+    }
   }, [uri]);
 
-  const onPlaybackStatusUpdate = (status: any) => {
-    if (status.isLoaded) {
-      // setDuration(status.durationMillis || 1);
-      setProgress(status.positionMillis / (status.durationMillis || 1));
-      setIsPlaying(status.isPlaying);
-    }
-  };
-
   const togglePlay = async () => {
-    if (!sound.current) return;
+    if (!audioRef.current) return;
+
     if (isPlaying) {
-      await sound.current.pauseAsync();
+      audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      await sound.current.playAsync();
+      // Web
+      if (Platform.OS === "web") {
+        await audioRef.current.play();
+      } else {
+        const player = audioRef.current as AudioPlayer;
+        if (player.currentTime >= player.duration) player.seekTo(0);
+        player.play();
+      }
+      setIsPlaying(true);
     }
   };
 
@@ -60,11 +86,9 @@ export default function AudioPlayer({ uri }: AudioPlayerProps) {
         shadowOpacity: 0.1,
         shadowRadius: 6,
         alignItems: "center",
-        justifyContent: "center",
         gap: 10,
       }}
     >
-      {/* Play / Pause Button */}
       <TouchableOpacity
         onPress={togglePlay}
         style={{
@@ -72,8 +96,6 @@ export default function AudioPlayer({ uri }: AudioPlayerProps) {
           paddingVertical: 8,
           paddingHorizontal: 16,
           borderRadius: 8,
-          alignSelf: "flex-start",
-          marginTop: 10,
         }}
       >
         <Text style={{ color: "white", fontWeight: "bold" }}>
@@ -81,24 +103,19 @@ export default function AudioPlayer({ uri }: AudioPlayerProps) {
         </Text>
       </TouchableOpacity>
 
-      {/* Waveform / Progress Bar */}
-      <Svg height="40" width="100%" style={{ marginTop: 10 }}>
-        <Rect x="0" y="15" width="100%" height="10" rx="5" fill="#ddd" />
-        <Rect
-          x="0"
-          y="15"
-          width={`${progress * 100}%`}
-          height="10"
-          rx="5"
-          fill="#f97316"
-        />
-      </Svg>
-
-      {/* Time Display */}
-      {/* <Text style={{ marginTop: 6, color: "#555" }}>
-        {Math.floor((progress * duration) / 1000)}s /{" "}
-        {Math.floor(duration / 1000)}s
-      </Text> */}
+      <View style={{ flex: 1 }}>
+        <Svg height="20" width="100%">
+          <Rect x="0" y="5" width="100%" height="10" rx="5" fill="#ddd" />
+          <Rect
+            x="0"
+            y="5"
+            width={`${progress * 100}%`}
+            height="10"
+            rx="5"
+            fill="#f97316"
+          />
+        </Svg>
+      </View>
     </View>
   );
 }
