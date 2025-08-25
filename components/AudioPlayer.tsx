@@ -56,11 +56,19 @@ export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
 
   const togglePlay = async () => {
     if (!audioRef.current) return;
+
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      await audioRef.current.play();
+      // Web
+      if (Platform.OS === "web") {
+        await audioRef.current.play();
+      } else {
+        const player = audioRef.current as AudioPlayer;
+        if (player.currentTime >= player.duration) player.seekTo(0);
+        player.play();
+      }
       setIsPlaying(true);
     }
   };
