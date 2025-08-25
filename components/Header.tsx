@@ -6,12 +6,13 @@ export default function Header() {
   return (
     <View
       style={{
-        height: 100,
+        height: 150,
         backgroundColor: colors.orange["500"],
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-around",
+        paddingTop: 50,
       }}
     >
       <View
