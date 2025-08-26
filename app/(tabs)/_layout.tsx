@@ -29,21 +29,31 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="translator"
-        options={{
-          title: "Translator",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="book-outline" color={color} size={size} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
         name="listening"
         options={{
           title: "Listening",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="headset-outline" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="vocab"
+        options={{
+          title: "Vocab",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="layers-outline" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="translator"
+        options={{
+          title: "Translator",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="book-outline" color={color} size={size} />
           ),
         }}
       />

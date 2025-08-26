@@ -6,6 +6,8 @@ import { Button } from "@react-navigation/elements";
 import React from "react";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -90,7 +92,10 @@ export default function Translator() {
     : "Bisaya → English";
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.cream["500"] }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1, backgroundColor: colors.cream["500"] }}
+    >
       <Header />
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <View
@@ -314,6 +319,6 @@ export default function Translator() {
 
         <View style={{ height: 40 }} />
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
