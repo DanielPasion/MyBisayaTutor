@@ -15,7 +15,7 @@ export default function FlashCard({
     // Reset animation value to 0 (front side)
     flipAnim.setValue(0);
     setFlipped(false);
-  }, [flashCard]);
+  }, [flashCard, flipAnim]);
 
   const frontInterpolate = flipAnim.interpolate({
     inputRange: [0, 180],

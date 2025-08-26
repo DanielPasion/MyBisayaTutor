@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01566EF82D4CFFBB9C24F734 /* libPods-MyBisayaTutor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB16D5431A4F21AC971F415B /* libPods-MyBisayaTutor.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		5A82D0D9C0115E547C0B1365 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B774C83D047F595276321B5A /* PrivacyInfo.xcprivacy */; };
-		633147DADE5DC3128E629700 /* libPods-MyBisayaTutor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 062039B41FC3E9FB4B2A307B /* libPods-MyBisayaTutor.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		EE36B5EECDB6276EF091B2BC /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D20F566FDB4133835CB5A1A /* ExpoModulesProvider.swift */; };
+		D81B68CAB59FC666F9C216B0 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F24A760CBCD86F99D3B78AE /* ExpoModulesProvider.swift */; };
+		EE3FB1238ED21D76AFA38818 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CDE7888AA3D9C06599E2484E /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		062039B41FC3E9FB4B2A307B /* libPods-MyBisayaTutor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyBisayaTutor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F24A760CBCD86F99D3B78AE /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MyBisayaTutor/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MyBisayaTutor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBisayaTutor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MyBisayaTutor/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MyBisayaTutor/Info.plist; sourceTree = "<group>"; };
-		3D20F566FDB4133835CB5A1A /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MyBisayaTutor/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		713D0DB8077A9F578600D23B /* Pods-MyBisayaTutor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBisayaTutor.release.xcconfig"; path = "Target Support Files/Pods-MyBisayaTutor/Pods-MyBisayaTutor.release.xcconfig"; sourceTree = "<group>"; };
+		548CC2F26895766CD92B43B2 /* Pods-MyBisayaTutor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBisayaTutor.debug.xcconfig"; path = "Target Support Files/Pods-MyBisayaTutor/Pods-MyBisayaTutor.debug.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = MyBisayaTutor/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B774C83D047F595276321B5A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = MyBisayaTutor/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		AB16D5431A4F21AC971F415B /* libPods-MyBisayaTutor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyBisayaTutor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA9AA08321853A7BFDCE9CF3 /* Pods-MyBisayaTutor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBisayaTutor.release.xcconfig"; path = "Target Support Files/Pods-MyBisayaTutor/Pods-MyBisayaTutor.release.xcconfig"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		CDE7888AA3D9C06599E2484E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = MyBisayaTutor/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MyBisayaTutor/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* MyBisayaTutor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MyBisayaTutor-Bridging-Header.h"; path = "MyBisayaTutor/MyBisayaTutor-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA7AF3EF820FF92078CF7F06 /* Pods-MyBisayaTutor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBisayaTutor.debug.xcconfig"; path = "Target Support Files/Pods-MyBisayaTutor/Pods-MyBisayaTutor.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				633147DADE5DC3128E629700 /* libPods-MyBisayaTutor.a in Frameworks */,
+				01566EF82D4CFFBB9C24F734 /* libPods-MyBisayaTutor.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				B774C83D047F595276321B5A /* PrivacyInfo.xcprivacy */,
+				CDE7888AA3D9C06599E2484E /* PrivacyInfo.xcprivacy */,
 			);
 			name = MyBisayaTutor;
 			sourceTree = "<group>";
@@ -62,16 +62,16 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				062039B41FC3E9FB4B2A307B /* libPods-MyBisayaTutor.a */,
+				AB16D5431A4F21AC971F415B /* libPods-MyBisayaTutor.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		36E9937A9C9519921CF4FECC /* Pods */ = {
+		67FF953A1CEF9DC49250C97D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FA7AF3EF820FF92078CF7F06 /* Pods-MyBisayaTutor.debug.xcconfig */,
-				713D0DB8077A9F578600D23B /* Pods-MyBisayaTutor.release.xcconfig */,
+				548CC2F26895766CD92B43B2 /* Pods-MyBisayaTutor.debug.xcconfig */,
+				BA9AA08321853A7BFDCE9CF3 /* Pods-MyBisayaTutor.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -90,8 +90,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				36E9937A9C9519921CF4FECC /* Pods */,
-				F346B390F51EC25DE7E2B4A5 /* ExpoModulesProviders */,
+				67FF953A1CEF9DC49250C97D /* Pods */,
+				9CD979DE60DBE5A4F3CC3D0B /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -106,12 +106,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A834414C0A1FF6A48B6785A2 /* MyBisayaTutor */ = {
+		9CD979DE60DBE5A4F3CC3D0B /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				3D20F566FDB4133835CB5A1A /* ExpoModulesProvider.swift */,
+				F30CEB7C2E4D8F5EBB053B68 /* MyBisayaTutor */,
 			);
-			name = MyBisayaTutor;
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -123,12 +123,12 @@
 			path = MyBisayaTutor/Supporting;
 			sourceTree = "<group>";
 		};
-		F346B390F51EC25DE7E2B4A5 /* ExpoModulesProviders */ = {
+		F30CEB7C2E4D8F5EBB053B68 /* MyBisayaTutor */ = {
 			isa = PBXGroup;
 			children = (
-				A834414C0A1FF6A48B6785A2 /* MyBisayaTutor */,
+				0F24A760CBCD86F99D3B78AE /* ExpoModulesProvider.swift */,
 			);
-			name = ExpoModulesProviders;
+			name = MyBisayaTutor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,13 +139,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MyBisayaTutor" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				50DAAAAACA1AACE47D35261D /* [Expo] Configure project */,
+				F30F558F7D91DD81BD6F5FF4 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				196F6E84AEBC85FD35EF63C2 /* [CP] Embed Pods Frameworks */,
+				461903CE9B86C21764E67258 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -195,7 +195,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				5A82D0D9C0115E547C0B1365 /* PrivacyInfo.xcprivacy in Resources */,
+				EE3FB1238ED21D76AFA38818 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +239,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		196F6E84AEBC85FD35EF63C2 /* [CP] Embed Pods Frameworks */ = {
+		461903CE9B86C21764E67258 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,25 +256,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBisayaTutor/Pods-MyBisayaTutor-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		50DAAAAACA1AACE47D35261D /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-MyBisayaTutor/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -318,6 +299,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBisayaTutor/Pods-MyBisayaTutor-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F30F558F7D91DD81BD6F5FF4 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-MyBisayaTutor/expo-configure-project.sh\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -326,7 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				EE36B5EECDB6276EF091B2BC /* ExpoModulesProvider.swift in Sources */,
+				D81B68CAB59FC666F9C216B0 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +335,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA7AF3EF820FF92078CF7F06 /* Pods-MyBisayaTutor.debug.xcconfig */;
+			baseConfigurationReference = 548CC2F26895766CD92B43B2 /* Pods-MyBisayaTutor.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -372,7 +372,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 713D0DB8077A9F578600D23B /* Pods-MyBisayaTutor.release.xcconfig */;
+			baseConfigurationReference = BA9AA08321853A7BFDCE9CF3 /* Pods-MyBisayaTutor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

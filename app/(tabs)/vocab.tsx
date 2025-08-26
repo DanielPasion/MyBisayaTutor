@@ -233,7 +233,7 @@ export default function Vocab() {
       )}
       {inGame ? (
         <View
-          style={{ marginBottom: 50, display: "flex", flexDirection: "row" }}
+          style={{ marginBottom: 150, display: "flex", flexDirection: "row" }}
         >
           <Button
             style={{
@@ -275,7 +275,7 @@ export default function Vocab() {
             borderRadius: 12,
             width: 100,
             marginHorizontal: "auto",
-            marginBottom: 50,
+            marginBottom: 150,
           }}
           onPress={() => {
             setInGame(true);
