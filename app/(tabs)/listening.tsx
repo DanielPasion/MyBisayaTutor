@@ -326,6 +326,18 @@ export default function Translator() {
                 alignItems: "center",
               }}
             >
+              <Button
+                style={{
+                  backgroundColor: colors.orange["500"],
+                  paddingHorizontal: 16,
+                  paddingVertical: 10,
+                  borderRadius: 12,
+                }}
+                color={colors.white["500"]}
+                onPress={generateSentence}
+              >
+                Generate New Audio
+              </Button>
               {guessing ? (
                 <Loader />
               ) : (
@@ -345,18 +357,6 @@ export default function Translator() {
                   </Button>
                 )
               )}
-              <Button
-                style={{
-                  backgroundColor: colors.orange["500"],
-                  paddingHorizontal: 16,
-                  paddingVertical: 10,
-                  borderRadius: 12,
-                }}
-                color={colors.white["500"]}
-                onPress={generateSentence}
-              >
-                Generate New Audio
-              </Button>
             </View>
           </View>
         </View>
