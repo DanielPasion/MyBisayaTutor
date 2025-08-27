@@ -26,7 +26,12 @@ export default function Header() {
             My Bisaya Tutor
           </Text>
         </View>
-        <Ionicons name="settings" size={30} color={colors.cream["500"]} />
+
+        <Ionicons
+          name="contrast-outline"
+          size={30}
+          color={colors.cream["500"]}
+        />
       </View>
     </SafeAreaView>
   );

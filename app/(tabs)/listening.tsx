@@ -2,18 +2,21 @@ import AudioPlayer from "@/components/AudioPlayer";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
 import { colors } from "@/constants/Colors";
+
 import { generateAudioUrl } from "@/utils/generate-audio-url";
 import { uri } from "@/utils/uri";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from "@react-navigation/elements";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -25,6 +28,7 @@ export default function Translator() {
   const [level, setLevel] = useState<"A1" | "A2" | "B1" | "B2" | "C1" | "C2">(
     "A1"
   );
+  const [showPicker, setShowPicker] = useState(false);
   const [sentence, setSentence] = useState<{
     bisaya: string;
     english: string;
@@ -37,6 +41,22 @@ export default function Translator() {
   const [feedBack, setFeedback] = useState<string | undefined>();
 
   const [error, setError] = useState<string | undefined>();
+
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener("keyboardWillShow", () => {
+      setKeyboardVisible(true);
+    });
+    const hideSub = Keyboard.addListener("keyboardWillHide", () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   const generateSentence = async () => {
     setError(undefined);
@@ -132,34 +152,53 @@ export default function Translator() {
                 marginBottom: 20,
               }}
             >
-              <View
-                style={{
-                  borderColor: colors.orange["500"],
-                  borderRadius: 8,
-                  overflow: Platform.OS === "ios" ? "visible" : "hidden",
-                  backgroundColor: colors.orange["500"],
-                  marginVertical: 10,
-                  zIndex: 10,
-                }}
-              >
-                <Picker
-                  selectedValue={level}
-                  onValueChange={(value) => setLevel(value)}
+              <View>
+                <TouchableOpacity
+                  onPress={() => setShowPicker(!showPicker)}
                   style={{
-                    width: "100%",
-                    height: Platform.OS === "ios" ? 200 : 50,
-                    color: "#fff",
+                    backgroundColor: colors.orange["500"],
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                    borderRadius: 8,
+                    alignItems: "center",
                   }}
-                  itemStyle={{ fontSize: 18, color: "#fff" }}
-                  mode="dropdown"
                 >
-                  <Picker.Item key="A1" label="A1" value="A1" />
-                  <Picker.Item key="A2" label="A2" value="A2" />
-                  <Picker.Item key="B1" label="B1" value="B1" />
-                  <Picker.Item key="B2" label="B2" value="B2" />
-                  <Picker.Item key="C1" label="C1" value="C1" />
-                  <Picker.Item key="C2" label="C2" value="C2" />
-                </Picker>
+                  <Text style={{ color: "#fff", fontWeight: "600" }}>
+                    {showPicker ? "Hide Picker" : `Select Level: ${level}`}
+                  </Text>
+                </TouchableOpacity>
+
+                {showPicker && (
+                  <View
+                    style={{
+                      borderColor: colors.orange["500"],
+                      borderRadius: 8,
+                      overflow: Platform.OS === "ios" ? "visible" : "hidden",
+                      backgroundColor: colors.orange["500"],
+                      marginVertical: 10,
+                      zIndex: 10,
+                    }}
+                  >
+                    <Picker
+                      selectedValue={level}
+                      onValueChange={(value) => setLevel(value)}
+                      style={{
+                        width: 150,
+                        height: Platform.OS === "ios" ? 150 : 50,
+                        color: "#fff",
+                      }}
+                      itemStyle={{ fontSize: 18, color: "#fff", width: 150 }}
+                      mode="dropdown"
+                    >
+                      <Picker.Item key="A1" label="A1" value="A1" />
+                      <Picker.Item key="A2" label="A2" value="A2" />
+                      <Picker.Item key="B1" label="B1" value="B1" />
+                      <Picker.Item key="B2" label="B2" value="B2" />
+                      <Picker.Item key="C1" label="C1" value="C1" />
+                      <Picker.Item key="C2" label="C2" value="C2" />
+                    </Picker>
+                  </View>
+                )}
               </View>
 
               <Text
@@ -288,7 +327,7 @@ export default function Translator() {
               borderTopWidth: 1,
               borderTopColor: "#ccc",
               backgroundColor: colors.cream["500"],
-              marginBottom: 50,
+              marginBottom: keyboardVisible || Platform.OS !== "ios" ? 0 : 100,
             }}
           >
             {url && sentence && (

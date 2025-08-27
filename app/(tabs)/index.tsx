@@ -6,6 +6,7 @@ import { Button } from "@react-navigation/elements";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Image,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -30,6 +31,22 @@ export default function Tutor() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
+
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener("keyboardWillShow", () => {
+      setKeyboardVisible(true);
+    });
+    const hideSub = Keyboard.addListener("keyboardWillHide", () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: true });
@@ -87,7 +104,10 @@ export default function Tutor() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{ flex: 1, backgroundColor: colors.cream["500"] }}
+      style={{
+        flex: 1,
+        backgroundColor: colors.cream["500"],
+      }}
     >
       <Header />
 
@@ -189,7 +209,7 @@ export default function Tutor() {
           flexDirection: "row",
           padding: 20,
           gap: 10,
-          marginBottom: 100,
+          marginBottom: keyboardVisible || Platform.OS !== "ios" ? 0 : 75,
         }}
       >
         <TextInput
