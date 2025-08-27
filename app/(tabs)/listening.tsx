@@ -8,14 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from "@react-navigation/elements";
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { SafeAreaView, ScrollView, Text, TextInput, View } from "react-native";
 
 export default function Translator() {
   const [score, setScore] = useState(0);
@@ -25,7 +18,6 @@ export default function Translator() {
   const [level, setLevel] = useState<"A1" | "A2" | "B1" | "B2" | "C1" | "C2">(
     "A1"
   );
-  const [showPicker, setShowPicker] = useState(false);
   const [sentence, setSentence] = useState<{
     bisaya: string;
     english: string;
@@ -78,10 +70,10 @@ export default function Translator() {
   };
 
   const guessTranslation = async () => {
-    setGuessing(true);
     if (!guess) {
       return;
     }
+    setGuessing(true);
     try {
       const response = await fetch(`${uri}/openaiguess`, {
         method: "POST",
@@ -131,40 +123,20 @@ export default function Translator() {
               }}
             >
               <View>
-                <TouchableOpacity
-                  onPress={() => setShowPicker(!showPicker)}
-                  style={{
-                    borderWidth: 2,
-                    borderColor: colors.green["500"],
-                    borderRadius: 10,
-                    padding: 10,
-                    backgroundColor: colors.green["100"],
-                    minWidth: 120,
-                    alignItems: "center",
+                <Picker
+                  style={{ zIndex: -1 }}
+                  selectedValue={level}
+                  onValueChange={(value) => {
+                    setLevel(value);
                   }}
                 >
-                  <Text style={{ color: colors.green["700"], fontSize: 16 }}>
-                    {level || "Select Level"}
-                  </Text>
-                </TouchableOpacity>
-
-                {showPicker && (
-                  <Picker
-                    style={{ zIndex: -1 }}
-                    selectedValue={level}
-                    onValueChange={(value) => {
-                      setLevel(value);
-                      setShowPicker(false);
-                    }}
-                  >
-                    <Picker.Item label="A1" value="A1" />
-                    <Picker.Item label="A2" value="A2" />
-                    <Picker.Item label="B1" value="B1" />
-                    <Picker.Item label="B2" value="B2" />
-                    <Picker.Item label="C1" value="C1" />
-                    <Picker.Item label="C2" value="C2" />
-                  </Picker>
-                )}
+                  <Picker.Item label="A1" value="A1" />
+                  <Picker.Item label="A2" value="A2" />
+                  <Picker.Item label="B1" value="B1" />
+                  <Picker.Item label="B2" value="B2" />
+                  <Picker.Item label="C1" value="C1" />
+                  <Picker.Item label="C2" value="C2" />
+                </Picker>
               </View>
 
               <Text
