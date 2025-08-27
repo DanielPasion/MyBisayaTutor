@@ -5,6 +5,7 @@ import { colors } from "@/constants/Colors";
 import { Nouns } from "@/constants/Nouns";
 import { Other } from "@/constants/Other";
 import { Verbs } from "@/constants/Verbs";
+import { Picker } from "@react-native-picker/picker";
 import { Button } from "@react-navigation/elements";
 import { useState } from "react";
 import { Text, View } from "react-native";
@@ -21,6 +22,7 @@ export default function Vocab() {
   >("Nouns");
   const [flashCards, setFlashCards] = useState<FlashCardModel[]>(Nouns);
   const [flashCardIndex, setFlashCardIndex] = useState(0);
+  const [size, setSize] = useState(1);
 
   const [inGame, setInGame] = useState<boolean>(false);
   const [completed, setCompleted] = useState<number>(0);
@@ -35,10 +37,14 @@ export default function Vocab() {
       ];
 
       if (newFlashCards.length > 0) {
-        const newIndex = Math.floor(Math.random() * (newFlashCards.length - 1));
+        let newIndex;
+        do {
+          newIndex = Math.floor(Math.random() * newFlashCards.length); // ✅ use newFlashCards
+        } while (newIndex === flashCardIndex && newFlashCards.length > 1);
+
         setFlashCardIndex(newIndex);
       } else {
-        setInGame(false);
+        endGame();
       }
 
       return newFlashCards;
@@ -46,11 +52,19 @@ export default function Vocab() {
   };
 
   const wrongGuess = () => {
-    const newIndex = Math.floor(Math.random() * (flashCards.length - 1));
+    if (flashCards.length <= 1) return;
+
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * flashCards.length);
+    } while (newIndex === flashCardIndex);
+
     setFlashCardIndex(newIndex);
   };
 
   const endGame = () => {
+    setSize(1);
+    setFlashCards(Nouns);
     setVocabList("Nouns");
     setCompleted(0);
     setFlashCardIndex(0);
@@ -126,20 +140,17 @@ export default function Vocab() {
         <View
           style={{
             flex: 1,
-            display: "flex",
-            flexDirection: "row",
-            gap: 3,
+            flexDirection: "column",
             justifyContent: "center",
             margin: 20,
+            gap: 12,
           }}
         >
           <View
             style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
+              flexDirection: "row",
               justifyContent: "center",
+              gap: 12,
             }}
           >
             <Button
@@ -148,13 +159,16 @@ export default function Vocab() {
                   vocabList === "Nouns"
                     ? colors.orange["400"]
                     : colors.green["500"],
-                paddingHorizontal: 14,
-                paddingVertical: 60,
-                borderRadius: 12,
+                width: 150, // fixed width
+                height: 120, // fixed height
+                borderRadius: 16,
+                justifyContent: "center",
+                alignItems: "center",
               }}
               onPress={() => {
                 setVocabList("Nouns");
                 setFlashCards(Nouns);
+                setSize(1);
               }}
               disabled={vocabList === "Nouns"}
               color={colors.white["500"]}
@@ -167,13 +181,16 @@ export default function Vocab() {
                   vocabList === "Verbs"
                     ? colors.orange["400"]
                     : colors.green["500"],
-                paddingHorizontal: 14,
-                paddingVertical: 60,
-                borderRadius: 12,
+                width: 150,
+                height: 120,
+                borderRadius: 16,
+                justifyContent: "center",
+                alignItems: "center",
               }}
               onPress={() => {
                 setVocabList("Verbs");
                 setFlashCards(Verbs);
+                setSize(1);
               }}
               disabled={vocabList === "Verbs"}
               color={colors.white["500"]}
@@ -181,13 +198,12 @@ export default function Vocab() {
               Verbs
             </Button>
           </View>
+
           <View
             style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
+              flexDirection: "row",
               justifyContent: "center",
+              gap: 12,
             }}
           >
             <Button
@@ -196,13 +212,16 @@ export default function Vocab() {
                   vocabList === "Adjectives"
                     ? colors.orange["400"]
                     : colors.green["500"],
-                paddingHorizontal: 14,
-                paddingVertical: 60,
-                borderRadius: 12,
+                width: 150,
+                height: 120,
+                borderRadius: 16,
+                justifyContent: "center",
+                alignItems: "center",
               }}
               onPress={() => {
                 setVocabList("Adjectives");
                 setFlashCards(Adjectives);
+                setSize(1);
               }}
               disabled={vocabList === "Adjectives"}
               color={colors.white["500"]}
@@ -215,13 +234,16 @@ export default function Vocab() {
                   vocabList === "Misc"
                     ? colors.orange["400"]
                     : colors.green["500"],
-                paddingHorizontal: 14,
-                paddingVertical: 60,
-                borderRadius: 12,
+                width: 150,
+                height: 120,
+                borderRadius: 16,
+                justifyContent: "center",
+                alignItems: "center",
               }}
               onPress={() => {
                 setVocabList("Misc");
                 setFlashCards(Other);
+                setSize(1);
               }}
               disabled={vocabList === "Misc"}
               color={colors.white["500"]}
@@ -229,6 +251,17 @@ export default function Vocab() {
               Other
             </Button>
           </View>
+
+          <Picker
+            selectedValue={size}
+            onValueChange={(value) => {
+              setSize(value);
+            }}
+          >
+            {Array.from({ length: flashCards.length }, (_, i) => (
+              <Picker.Item key={i + 1} label={`${i + 1}`} value={i + 1} />
+            ))}
+          </Picker>
         </View>
       )}
       {inGame ? (
@@ -279,6 +312,12 @@ export default function Vocab() {
           }}
           onPress={() => {
             setInGame(true);
+            setFlashCards((prev) => {
+              if (!prev || prev.length === 0) return [];
+
+              const shuffled = [...prev].sort(() => Math.random() - 0.5);
+              return shuffled.slice(0, size);
+            });
           }}
           color={colors.white["500"]}
         >
