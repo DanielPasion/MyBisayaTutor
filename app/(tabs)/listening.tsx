@@ -151,14 +151,14 @@ export default function Translator() {
                     color: "#fff",
                   }}
                   itemStyle={{ fontSize: 18, color: "#fff" }}
-                  mode={Platform.OS === "ios" ? "dialog" : "dropdown"}
+                  mode="dropdown"
                 >
-                  <Picker.Item label="A1" value="A1" />
-                  <Picker.Item label="A2" value="A2" />
-                  <Picker.Item label="B1" value="B1" />
-                  <Picker.Item label="B2" value="B2" />
-                  <Picker.Item label="C1" value="C1" />
-                  <Picker.Item label="C2" value="C2" />
+                  <Picker.Item key="A1" label="A1" value="A1" />
+                  <Picker.Item key="A2" label="A2" value="A2" />
+                  <Picker.Item key="B1" label="B1" value="B1" />
+                  <Picker.Item key="B2" label="B2" value="B2" />
+                  <Picker.Item key="C1" label="C1" value="C1" />
+                  <Picker.Item key="C2" label="C2" value="C2" />
                 </Picker>
               </View>
 
