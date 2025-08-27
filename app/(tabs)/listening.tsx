@@ -139,7 +139,6 @@ export default function Translator() {
                   overflow: "hidden",
                   backgroundColor: colors.green["500"],
                   marginVertical: 10,
-                  zIndex: 10,
                 }}
               >
                 <Picker
