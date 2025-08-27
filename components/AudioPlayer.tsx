@@ -1,4 +1,4 @@
-import { AudioPlayer, createAudioPlayer } from "expo-audio";
+import { AudioPlayer, createAudioPlayer, setAudioModeAsync } from "expo-audio";
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Rect } from "react-native-svg";
@@ -32,6 +32,10 @@ export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
       };
     } else {
       const player = createAudioPlayer(uri);
+      setAudioModeAsync({
+        playsInSilentMode: true,
+        allowsRecording: true,
+      });
       audioRef.current = player;
 
       const interval = setInterval(() => {

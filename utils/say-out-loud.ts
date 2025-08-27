@@ -1,4 +1,4 @@
-import { createAudioPlayer } from "expo-audio";
+import { createAudioPlayer, setAudioModeAsync } from "expo-audio";
 import * as FileSystem from "expo-file-system";
 import { Platform } from "react-native";
 import { uri } from "./uri";
@@ -7,7 +7,10 @@ let lastText: string | null = null;
 let lastFileUri: string | null = null;
 
 export const sayOutLoud = async (text: string) => {
-  console.log(lastText, text);
+  setAudioModeAsync({
+    playsInSilentMode: true,
+    allowsRecording: true,
+  });
   try {
     if (text === lastText && lastFileUri) {
       if (Platform.OS === "web") {
