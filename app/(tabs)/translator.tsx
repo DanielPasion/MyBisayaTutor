@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { colors } from "@/constants/Colors";
+import useThemeColors from "@/hooks/useThemeColor";
 import { sayOutLoud } from "@/utils/say-out-loud";
 import { uri } from "@/utils/uri";
 import { Button } from "@react-navigation/elements";
@@ -15,6 +15,8 @@ import {
 } from "react-native";
 
 export default function Translator() {
+  const { colors } = useThemeColors();
+
   const [incomingText, setIncomingText] = React.useState("");
   const [translatedToBisaya, setTranslatedToBisaya] = React.useState(false);
   const [translatedText, setTranslatedText] = React.useState("");
@@ -141,6 +143,7 @@ export default function Translator() {
               paddingVertical: 10,
               fontSize: 16,
               minHeight: 60,
+              color: colors.cream["900"],
             }}
             onSubmitEditing={translate}
             onChangeText={setIncomingText}

@@ -1,3 +1,4 @@
+import useThemeColors from "@/hooks/useThemeColor";
 import { AudioPlayer, createAudioPlayer, setAudioModeAsync } from "expo-audio";
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, Text, TouchableOpacity, View } from "react-native";
@@ -8,6 +9,8 @@ interface AudioPlayerProps {
 }
 
 export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
+  const { colors } = useThemeColors();
+
   const audioRef = useRef<HTMLAudioElement | AudioPlayer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -82,7 +85,7 @@ export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
       style={{
         display: "flex",
         flexDirection: "row",
-        backgroundColor: "white",
+        backgroundColor: colors.white["500"],
         borderRadius: 12,
         padding: 16,
         margin: 10,
@@ -102,7 +105,7 @@ export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
           borderRadius: 8,
         }}
       >
-        <Text style={{ color: "white", fontWeight: "bold" }}>
+        <Text style={{ color: colors.white["500"], fontWeight: "bold" }}>
           {isPlaying ? "Pause" : "Play"}
         </Text>
       </TouchableOpacity>

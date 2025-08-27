@@ -1,14 +1,14 @@
 import FlashCard from "@/components/FlashCard";
 import Header from "@/components/Header";
 import { Adjectives } from "@/constants/Adjectives";
-import { colors } from "@/constants/Colors";
 import { Nouns } from "@/constants/Nouns";
 import { Other } from "@/constants/Other";
 import { Verbs } from "@/constants/Verbs";
+import useThemeColors from "@/hooks/useThemeColor";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from "@react-navigation/elements";
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 export interface FlashCardModel {
   english: string;
@@ -17,6 +17,8 @@ export interface FlashCardModel {
   example_bisaya: string;
 }
 export default function Vocab() {
+  const { colors } = useThemeColors();
+
   const [vocabList, setVocabList] = useState<
     "Nouns" | "Verbs" | "Adjectives" | "Misc"
   >("Nouns");
@@ -85,9 +87,10 @@ export default function Vocab() {
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 3,
-            justifyContent: "center",
-            margin: 20,
+            gap: Platform.OS !== "ios" ? 100 : 3,
+            justifyContent: "flex-start",
+            marginHorizontal: 20,
+            marginTop: Platform.OS !== "ios" ? 25 : 0,
           }}
         >
           <View
@@ -96,22 +99,24 @@ export default function Vocab() {
               alignItems: "center",
               paddingHorizontal: 10,
               flex: 1,
+              marginTop: 10,
             }}
           >
             <Button
               style={{
-                paddingHorizontal: 14,
+                flex: 1,
+                paddingHorizontal: 3,
                 paddingVertical: 10,
                 borderRadius: 12,
-                width: 100,
+                width: 5,
               }}
               onPress={endGame}
-              color={colors.orange["500"]}
+              color={colors.green["500"]}
             >
               ← Exit
             </Button>
 
-            <View style={{ flex: 1, alignItems: "center" }}>
+            <View style={{ flex: 3, alignItems: "center" }}>
               <Text
                 style={{
                   fontSize: 20,
@@ -125,6 +130,7 @@ export default function Vocab() {
 
             <Text
               style={{
+                flex: 1,
                 fontSize: 20,
                 fontWeight: "700",
                 color: colors.green["500"],
@@ -133,8 +139,9 @@ export default function Vocab() {
               {completed}/{completed + flashCards.length}
             </Text>
           </View>
-
-          <FlashCard flashCard={flashCards[flashCardIndex]} />
+          <View style={{ flex: 10 }}>
+            <FlashCard flashCard={flashCards[flashCardIndex]} />
+          </View>
         </View>
       ) : (
         <View
@@ -285,7 +292,11 @@ export default function Vocab() {
       )}
       {inGame ? (
         <View
-          style={{ marginBottom: 150, display: "flex", flexDirection: "row" }}
+          style={{
+            marginBottom: Platform.OS !== "ios" ? 0 : 150,
+            display: "flex",
+            flexDirection: "row",
+          }}
         >
           <Button
             style={{
@@ -327,7 +338,7 @@ export default function Vocab() {
             borderRadius: 12,
             width: 100,
             marginHorizontal: "auto",
-            marginBottom: 150,
+            marginBottom: Platform.OS !== "ios" ? 25 : 150,
           }}
           onPress={() => {
             setInGame(true);

@@ -1,8 +1,19 @@
-import { colors } from "@/constants/Colors";
+import useThemeColors from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, SafeAreaView, Text, View } from "react-native";
+import {
+  Appearance,
+  Image,
+  Platform,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from "react-native";
 
 export default function Header() {
+  const { colors } = useThemeColors();
+  const colorScheme = useColorScheme();
   return (
     <SafeAreaView
       style={{
@@ -26,7 +37,25 @@ export default function Header() {
             My Bisaya Tutor
           </Text>
         </View>
-        <Ionicons name="settings" size={30} color={colors.cream["500"]} />
+
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              if (Platform.OS === "ios") {
+                Appearance.setColorScheme(
+                  colorScheme === "dark" ? "light" : "dark"
+                );
+                
+              }
+            }}
+          >
+            <Ionicons
+              name="contrast-outline"
+              size={30}
+              color={colors.cream["500"]}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -1,4 +1,5 @@
 import { FlashCardModel } from "@/app/(tabs)/vocab";
+import useThemeColors from "@/hooks/useThemeColor";
 import { useEffect, useRef, useState } from "react";
 import { Animated, Text, TouchableWithoutFeedback, View } from "react-native";
 
@@ -7,6 +8,8 @@ export default function FlashCard({
 }: {
   flashCard: FlashCardModel;
 }) {
+  const { colors } = useThemeColors();
+
   const [flipped, setFlipped] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
 
@@ -55,7 +58,7 @@ export default function FlashCard({
             transform: [{ rotateY: frontInterpolate }],
             width: 300,
             height: 200,
-            backgroundColor: "white",
+            backgroundColor: colors.white["500"],
             justifyContent: "space-between",
             alignItems: "center",
             padding: 20,
@@ -82,7 +85,7 @@ export default function FlashCard({
             transform: [{ rotateY: backInterpolate }],
             width: 300,
             height: 200,
-            backgroundColor: "white",
+            backgroundColor: colors.white["500"],
             justifyContent: "space-between",
             alignItems: "center",
             padding: 20,
