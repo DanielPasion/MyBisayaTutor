@@ -137,8 +137,9 @@ export default function Translator() {
                   borderColor: colors.orange["500"],
                   borderRadius: 8,
                   overflow: "hidden",
-                  backgroundColor: colors.green["500"],
+                  backgroundColor: colors.orange["500"],
                   marginVertical: 10,
+                  zIndex: 10,
                 }}
               >
                 <Picker
@@ -146,12 +147,12 @@ export default function Translator() {
                   onValueChange={(value) => setLevel(value)}
                   style={{
                     width: "100%",
-                    height: 150, // controls iOS wheel height
-                    color: "#fff", // text color
+                    height: 50,
+                    color: "#fff",
                   }}
                   itemStyle={{
                     fontSize: 18,
-                    color: "#fff", // iOS picker item color
+                    color: "#fff",
                   }}
                   mode="dropdown"
                 >

@@ -257,7 +257,7 @@ export default function Vocab() {
               borderColor: colors.orange["500"],
               borderRadius: 8,
               overflow: "hidden",
-              backgroundColor: colors.green["500"],
+              backgroundColor: colors.orange["500"],
               marginVertical: 10,
               zIndex: 10,
             }}
@@ -267,12 +267,12 @@ export default function Vocab() {
               onValueChange={(value) => setSize(value)}
               style={{
                 width: "100%",
-                height: 150, // iOS wheel height
-                color: "#fff", // text color inside picker
+                height: 100,
+                color: "#fff",
               }}
               itemStyle={{
                 fontSize: 18,
-                color: "#fff", // item color on iOS
+                color: "#fff",
               }}
               mode="dropdown"
             >
