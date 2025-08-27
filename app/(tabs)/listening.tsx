@@ -136,7 +136,7 @@ export default function Translator() {
                 style={{
                   borderColor: colors.orange["500"],
                   borderRadius: 8,
-                  overflow: "hidden",
+                  overflow: Platform.OS === "ios" ? "visible" : "hidden",
                   backgroundColor: colors.orange["500"],
                   marginVertical: 10,
                   zIndex: 10,
@@ -147,14 +147,11 @@ export default function Translator() {
                   onValueChange={(value) => setLevel(value)}
                   style={{
                     width: "100%",
-                    height: 50,
+                    height: Platform.OS === "ios" ? 200 : 50,
                     color: "#fff",
                   }}
-                  itemStyle={{
-                    fontSize: 18,
-                    color: "#fff",
-                  }}
-                  mode="dropdown"
+                  itemStyle={{ fontSize: 18, color: "#fff" }}
+                  mode={Platform.OS === "ios" ? "dialog" : "dropdown"}
                 >
                   <Picker.Item label="A1" value="A1" />
                   <Picker.Item label="A2" value="A2" />

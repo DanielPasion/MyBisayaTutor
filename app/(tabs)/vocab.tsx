@@ -267,7 +267,7 @@ export default function Vocab() {
               onValueChange={(value) => setSize(value)}
               style={{
                 width: "100%",
-                height: 100,
+                height: 150,
                 color: "#fff",
               }}
               itemStyle={{
