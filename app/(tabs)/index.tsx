@@ -1,6 +1,5 @@
-// index.tsx
 import Header from "@/components/Header";
-import { colors } from "@/constants/Colors";
+import useThemeColors from "@/hooks/useThemeColor";
 import { uri } from "@/utils/uri";
 import { Button } from "@react-navigation/elements";
 import React, { useEffect, useRef, useState } from "react";
@@ -21,6 +20,8 @@ interface Message {
 }
 
 export default function Tutor() {
+  const { colors } = useThemeColors();
+
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -192,8 +193,8 @@ export default function Tutor() {
                 style={{
                   color:
                     msg.role === "user"
-                      ? colors.white["500"]
-                      : colors.green["900"],
+                      ? colors.cream["500"]
+                      : colors.green["500"],
                   fontSize: 16,
                 }}
               >
@@ -222,6 +223,7 @@ export default function Tutor() {
             paddingHorizontal: 12,
             paddingVertical: 10,
             fontSize: 16,
+            color: colors.cream["900"],
           }}
           placeholder="Type a message..."
           placeholderTextColor={colors.green["500"]}

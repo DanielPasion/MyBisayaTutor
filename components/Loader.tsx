@@ -1,5 +1,5 @@
 // components/Loader.tsx
-import { colors } from "@/constants/Colors";
+import useThemeColors from "@/hooks/useThemeColor";
 import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
@@ -12,6 +12,8 @@ export default function Loader({
   size = "large",
   fullscreen = false,
 }: LoaderProps) {
+  const { colors } = useThemeColors();
+
   return (
     <View style={[styles.base, fullscreen && styles.fullscreen]}>
       <ActivityIndicator

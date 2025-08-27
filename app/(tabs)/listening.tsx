@@ -1,8 +1,7 @@
 import AudioPlayer from "@/components/AudioPlayer";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
-import { colors } from "@/constants/Colors";
-
+import useThemeColors from "@/hooks/useThemeColor";
 import { generateAudioUrl } from "@/utils/generate-audio-url";
 import { uri } from "@/utils/uri";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,6 +20,8 @@ import {
 } from "react-native";
 
 export default function Translator() {
+  const { colors } = useThemeColors();
+
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);

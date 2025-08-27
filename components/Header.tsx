@@ -1,8 +1,15 @@
-import { colors } from "@/constants/Colors";
+import useThemeColors from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, SafeAreaView, Text, View } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function Header() {
+  const { colors, colorScheme, setColorScheme } = useThemeColors();
   return (
     <SafeAreaView
       style={{
@@ -27,11 +34,19 @@ export default function Header() {
           </Text>
         </View>
 
-        <Ionicons
-          name="contrast-outline"
-          size={30}
-          color={colors.cream["500"]}
-        />
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              setColorScheme(colorScheme === "dark" ? "light" : "dark");
+            }}
+          >
+            <Ionicons
+              name="contrast-outline"
+              size={30}
+              color={colors.cream["500"]}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -1,10 +1,10 @@
 import FlashCard from "@/components/FlashCard";
 import Header from "@/components/Header";
 import { Adjectives } from "@/constants/Adjectives";
-import { colors } from "@/constants/Colors";
 import { Nouns } from "@/constants/Nouns";
 import { Other } from "@/constants/Other";
 import { Verbs } from "@/constants/Verbs";
+import useThemeColors from "@/hooks/useThemeColor";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from "@react-navigation/elements";
 import { useState } from "react";
@@ -17,6 +17,8 @@ export interface FlashCardModel {
   example_bisaya: string;
 }
 export default function Vocab() {
+  const { colors } = useThemeColors();
+
   const [vocabList, setVocabList] = useState<
     "Nouns" | "Verbs" | "Adjectives" | "Misc"
   >("Nouns");
