@@ -189,7 +189,7 @@ export default function Tutor() {
           flexDirection: "row",
           padding: 20,
           gap: 10,
-          marginBottom: 50,
+          marginBottom: 100,
         }}
       >
         <TextInput

@@ -8,7 +8,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from "@react-navigation/elements";
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text, TextInput, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function Translator() {
   const [score, setScore] = useState(0);
@@ -101,7 +108,10 @@ export default function Translator() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream["500"] }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1, backgroundColor: colors.cream["500"] }}
+    >
       <Header />
 
       {!error ? (
@@ -122,13 +132,29 @@ export default function Translator() {
                 marginBottom: 20,
               }}
             >
-              <View>
+              <View
+                style={{
+                  borderColor: colors.orange["500"],
+                  borderRadius: 8,
+                  overflow: "hidden",
+                  backgroundColor: colors.green["500"],
+                  marginVertical: 10,
+                  zIndex: 10,
+                }}
+              >
                 <Picker
-                  style={{ zIndex: -1 }}
                   selectedValue={level}
-                  onValueChange={(value) => {
-                    setLevel(value);
+                  onValueChange={(value) => setLevel(value)}
+                  style={{
+                    width: "100%",
+                    height: 150, // controls iOS wheel height
+                    color: "#fff", // text color
                   }}
+                  itemStyle={{
+                    fontSize: 18,
+                    color: "#fff", // iOS picker item color
+                  }}
+                  mode="dropdown"
                 >
                   <Picker.Item label="A1" value="A1" />
                   <Picker.Item label="A2" value="A2" />
@@ -335,6 +361,6 @@ export default function Translator() {
       ) : (
         <View style={{ padding: 20 }}>{error}</View>
       )}
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }

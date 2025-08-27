@@ -252,16 +252,35 @@ export default function Vocab() {
             </Button>
           </View>
 
-          <Picker
-            selectedValue={size}
-            onValueChange={(value) => {
-              setSize(value);
+          <View
+            style={{
+              borderColor: colors.orange["500"],
+              borderRadius: 8,
+              overflow: "hidden",
+              backgroundColor: colors.green["500"],
+              marginVertical: 10,
+              zIndex: 10,
             }}
           >
-            {Array.from({ length: flashCards.length }, (_, i) => (
-              <Picker.Item key={i + 1} label={`${i + 1}`} value={i + 1} />
-            ))}
-          </Picker>
+            <Picker
+              selectedValue={size}
+              onValueChange={(value) => setSize(value)}
+              style={{
+                width: "100%",
+                height: 150, // iOS wheel height
+                color: "#fff", // text color inside picker
+              }}
+              itemStyle={{
+                fontSize: 18,
+                color: "#fff", // item color on iOS
+              }}
+              mode="dropdown"
+            >
+              {Array.from({ length: flashCards.length }, (_, i) => (
+                <Picker.Item key={i + 1} label={`${i + 1}`} value={i + 1} />
+              ))}
+            </Picker>
+          </View>
         </View>
       )}
       {inGame ? (
