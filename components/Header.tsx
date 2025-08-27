@@ -1,15 +1,19 @@
 import useThemeColors from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
 import {
+  Appearance,
   Image,
+  Platform,
   SafeAreaView,
   Text,
   TouchableOpacity,
+  useColorScheme,
   View,
 } from "react-native";
 
 export default function Header() {
-  const { colors, colorScheme, setColorScheme } = useThemeColors();
+  const { colors } = useThemeColors();
+  const colorScheme = useColorScheme();
   return (
     <SafeAreaView
       style={{
@@ -37,7 +41,12 @@ export default function Header() {
         <View>
           <TouchableOpacity
             onPress={() => {
-              setColorScheme(colorScheme === "dark" ? "light" : "dark");
+              if (Platform.OS === "ios") {
+                Appearance.setColorScheme(
+                  colorScheme === "dark" ? "light" : "dark"
+                );
+                
+              }
             }}
           >
             <Ionicons
