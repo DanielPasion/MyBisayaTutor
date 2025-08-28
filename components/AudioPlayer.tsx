@@ -35,10 +35,6 @@ export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
       };
     } else {
       const player = createAudioPlayer(uri);
-      setAudioModeAsync({
-        playsInSilentMode: true,
-        allowsRecording: true,
-      });
       audioRef.current = player;
 
       const interval = setInterval(() => {
@@ -73,6 +69,10 @@ export default function AudioPlayerComponent({ uri }: AudioPlayerProps) {
         await audioRef.current.play();
       } else {
         const player = audioRef.current as AudioPlayer;
+        await setAudioModeAsync({
+          playsInSilentMode: true,
+          allowsRecording: false,
+        });
         if (player.currentTime >= player.duration) player.seekTo(0);
         player.play();
       }

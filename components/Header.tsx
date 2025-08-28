@@ -12,8 +12,8 @@ import {
 } from "react-native";
 
 export default function Header() {
-  const { colors } = useThemeColors();
   const colorScheme = useColorScheme();
+  const { colors } = useThemeColors();
   return (
     <SafeAreaView
       style={{
@@ -45,7 +45,6 @@ export default function Header() {
                 Appearance.setColorScheme(
                   colorScheme === "dark" ? "light" : "dark"
                 );
-                
               }
             }}
           >
