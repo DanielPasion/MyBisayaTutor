@@ -268,9 +268,22 @@ export default function Translator() {
                     </Text>
                   </View>
                 ) : (
-                  <View style={{ marginVertical: 30 }}>
+                  <View
+                    style={{
+                      marginVertical: 30,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
+                  >
                     {showBisaya && (
-                      <Text style={{ fontSize: 16, marginBottom: 8 }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginBottom: 8,
+                          color: colors.orange["700"],
+                        }}
+                      >
                         {sentence.bisaya}
                       </Text>
                     )}
@@ -296,7 +309,13 @@ export default function Translator() {
                     {showBisaya && (
                       <>
                         {showEnglish && (
-                          <Text style={{ fontSize: 16, marginBottom: 8 }}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              marginBottom: 8,
+                              color: colors.orange["700"],
+                            }}
+                          >
                             {sentence.english}
                           </Text>
                         )}

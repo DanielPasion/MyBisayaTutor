@@ -245,7 +245,7 @@ export default function Translator() {
                 onPress={() =>
                   sayOutLoud(translatedToBisaya ? translatedText : incomingText)
                 }
-                color={colors.white["500"]}
+                color={colors.cream["500"]}
               >
                 Say Out Loud
               </Button>
@@ -292,7 +292,7 @@ export default function Translator() {
                 >
                   Original
                 </Text>
-                <Text style={{ fontSize: 16, color: colors.green["900"] }}>
+                <Text style={{ fontSize: 16, color: colors.green["800"] }}>
                   {sentenceExampleOriginal}
                 </Text>
               </View>
@@ -306,13 +306,13 @@ export default function Translator() {
                 <Text
                   style={{
                     fontSize: 12,
-                    color: colors.green["700"],
+                    color: colors.green["500"],
                     marginBottom: 4,
                   }}
                 >
                   Translation
                 </Text>
-                <Text style={{ fontSize: 16, color: colors.green["900"] }}>
+                <Text style={{ fontSize: 16, color: colors.green["700"] }}>
                   {sentenceExampleTranslated}
                 </Text>
               </View>

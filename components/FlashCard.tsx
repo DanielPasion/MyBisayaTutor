@@ -72,9 +72,7 @@ export default function FlashCard({
           <Text style={{ fontSize: 24, fontWeight: "700" }}>
             {flashCard.bisaya}
           </Text>
-          <Text style={{ fontSize: 18, color: "#555" }}>
-            {flashCard.example_bisaya}
-          </Text>
+          <Text style={{ fontSize: 18 }}>{flashCard.example_bisaya}</Text>
         </Animated.View>
 
         {/* Back Side */}
@@ -99,9 +97,7 @@ export default function FlashCard({
           <Text style={{ fontSize: 24, fontWeight: "700" }}>
             {flashCard.english}
           </Text>
-          <Text style={{ fontSize: 18, color: "#555" }}>
-            {flashCard.example_english}
-          </Text>
+          <Text style={{ fontSize: 18 }}>{flashCard.example_english}</Text>
         </Animated.View>
       </View>
     </TouchableWithoutFeedback>
