@@ -1,50 +1,44 @@
-# Welcome to your Expo app 👋
+# MyBisayaTutor
+An AI-powered language learning app that leverages LLMs to provide accessible, on-demand resources for learning Bisaya.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Features
+### 24/7 Bisaya Tutor
+<img width="auto" height="250" alt="image" src="https://github.com/user-attachments/assets/ab58bff5-3e91-4ba8-9e9a-cc781b7dbfad" />  
+ 
+- Comes with a personal AI tutor to assist you with any language learning activites
+ 
+### Audio Comprhension
+<img width="auto" height="250" alt="image" src="https://github.com/user-attachments/assets/d28e94c1-1bd7-4043-bb2b-2a957615a011" /> 
+ 
+- Audio Practice based off CERF ratings to match your current skill set
 
-## Get started
+### Flashcards
+<img width="auto" height="250" alt="image" src="https://github.com/user-attachments/assets/b7c4978c-2339-4a57-b6a2-1945c8891489" /> 
+ 
+- Flashcards that are sortable by noun, verb, adjective, and other. Selectable amount of cards to study during a session is available as well. 
 
-1. Install dependencies
+### Translator
+<img width="auto" height="250" alt="image" src="https://github.com/user-attachments/assets/4ac33ab2-2a15-4a76-8f58-48a6ca903772" /> 
+ 
+- English <-> Bisaya translator that gives an example for short phrases and words, as well as an audio pronounciation of the requested translation
 
-   ```bash
-   npm install
-   ```
+## Tech Stack
+- React Native (Typescript, built with Expo)
+- Node.js (express), Typescript for server (see: <a href="https://github.com/DanielPasion/MBTServer">here</a>)
 
-2. Start the app
+## Running Locally
+- This app has compatibility for both the web and ios (no android support is included)
 
-   ```bash
-   npx expo start
-   ```
+### Web
+```npx expo start```
 
-In the output, you'll find options to open the app in a
+### Ios
+```npx expo start```
+```s```
+```i```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Building (ios)
+- You can build to ios the following ways _(Xcode is required for both) _
+   - Plug in your phone and run: ```npx react-native run-ios --mode Release ```
+   - ---or---
+   - ```eas build -p ios``` and deploy the downloaded file to flighttest
