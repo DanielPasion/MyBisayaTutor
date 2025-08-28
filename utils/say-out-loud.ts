@@ -7,10 +7,6 @@ let lastText: string | null = null;
 let lastFileUri: string | null = null;
 
 export const sayOutLoud = async (text: string) => {
-  setAudioModeAsync({
-    playsInSilentMode: true,
-    allowsRecording: true,
-  });
   try {
     if (text === lastText && lastFileUri) {
       if (Platform.OS === "web") {
@@ -18,6 +14,10 @@ export const sayOutLoud = async (text: string) => {
         await audio.play();
       } else {
         const player = createAudioPlayer(lastFileUri);
+        await setAudioModeAsync({
+          playsInSilentMode: true,
+          allowsRecording: false,
+        });
         player.play();
       }
       return;

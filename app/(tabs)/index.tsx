@@ -90,7 +90,7 @@ export default function Tutor() {
           return newMessages;
         });
         if (idx >= fullMessage.length) clearInterval(interval);
-      }, 25); // adjust speed (ms per character)
+      }, 50); // adjust speed (ms per character)
     } catch (err) {
       console.error(err);
       setMessages((prev) => [
