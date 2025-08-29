@@ -122,7 +122,7 @@ export default function Vocab() {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              paddingHorizontal: 10,
+              paddingHorizontal: 2,
               flex: 1,
               marginTop: 10,
             }}
