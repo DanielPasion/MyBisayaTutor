@@ -61,36 +61,43 @@ export default function Tutor() {
     setInput("");
     setIsLoading(true);
 
+    // Add assistant placeholder
+    const assistantMessage: Message = { role: "assistant", content: "" };
+    setMessages((prev) => [...prev, assistantMessage]);
+
     try {
       const res = await fetch(`${uri}/openaitutor`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [...messages, userMessage],
-        }),
+        body: JSON.stringify({ messages: [...messages, userMessage] }),
       });
 
-      const data = await res.json();
-      const fullMessage = data.text || "Sorry, I couldn't generate a response.";
+      if (!res.body) throw new Error("No response body");
 
-      // Add a placeholder assistant message
-      const assistantMessage: Message = { role: "assistant", content: "" };
-      setMessages((prev) => [...prev, assistantMessage]);
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder("utf-8");
 
-      // Animate letter by letter
-      let idx = 0;
-      const interval = setInterval(() => {
-        idx++;
-        setMessages((prev) => {
-          const newMessages = [...prev];
-          newMessages[newMessages.length - 1] = {
-            ...newMessages[newMessages.length - 1],
-            content: fullMessage.slice(0, idx),
-          };
-          return newMessages;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+
+        chunk.split("\n\n").forEach((line) => {
+          if (line.startsWith("data: ")) {
+            const data = line.replace("data: ", "");
+            if (data === "[DONE]") return;
+
+            setMessages((prev) => {
+              const newMessages = [...prev];
+              newMessages[newMessages.length - 1] = {
+                ...newMessages[newMessages.length - 1],
+                content: newMessages[newMessages.length - 1].content + data,
+              };
+              return newMessages;
+            });
+          }
         });
-        if (idx >= fullMessage.length) clearInterval(interval);
-      }, 25);
+      }
     } catch (err) {
       console.error(err);
       setMessages((prev) => [

@@ -1,13 +1,11 @@
 import FlashCard from "@/components/FlashCard";
 import Header from "@/components/Header";
-import { Adjectives } from "@/constants/Adjectives";
-import { Nouns } from "@/constants/Nouns";
-import { Other } from "@/constants/Other";
-import { Verbs } from "@/constants/Verbs";
+
 import useThemeColors from "@/hooks/useThemeColor";
+import { uri } from "@/utils/uri";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from "@react-navigation/elements";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 
 export interface FlashCardModel {
@@ -18,6 +16,10 @@ export interface FlashCardModel {
 }
 export default function Vocab() {
   const { colors } = useThemeColors();
+  const [Nouns, setNouns] = useState<FlashCardModel[]>([]);
+  const [Verbs, setVerbs] = useState<FlashCardModel[]>([]);
+  const [Adjectives, setAdjectives] = useState<FlashCardModel[]>([]);
+  const [Other, setOther] = useState<FlashCardModel[]>([]);
 
   const [vocabList, setVocabList] = useState<
     "Nouns" | "Verbs" | "Adjectives" | "Misc"
@@ -72,6 +74,29 @@ export default function Vocab() {
     setFlashCardIndex(0);
     setInGame(false);
   };
+
+  useEffect(() => {
+    const getFlashcards = async () => {
+      try {
+        const response = await fetch(`${uri}/flashcards`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = (await response.json()) as {
+          Nouns: FlashCardModel[];
+          Verbs: FlashCardModel[];
+          Adjectives: FlashCardModel[];
+          Other: FlashCardModel[];
+        };
+        setNouns(data.Nouns);
+        setVerbs(data.Verbs);
+        setAdjectives(data.Adjectives);
+        setOther(data.Other);
+      } catch {}
+    };
+
+    getFlashcards();
+  }, []);
 
   return (
     <View
