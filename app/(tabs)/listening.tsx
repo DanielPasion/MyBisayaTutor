@@ -26,9 +26,9 @@ export default function Translator() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [guessing, setGuessing] = useState(false);
-  const [level, setLevel] = useState<"A1" | "A2" | "B1" | "B2" | "C1" | "C2">(
-    "A1"
-  );
+  const [level, setLevel] = useState<
+    "A0" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2"
+  >("A0");
   const [showPicker, setShowPicker] = useState(false);
   const [sentence, setSentence] = useState<{
     bisaya: string;
@@ -174,7 +174,7 @@ export default function Translator() {
                     style={{
                       borderColor: colors.orange["500"],
                       borderRadius: 8,
-                      overflow: Platform.OS === "ios" ? "visible" : "hidden",
+                      overflow: "hidden",
                       backgroundColor: colors.orange["500"],
                       marginVertical: 10,
                       zIndex: 10,
@@ -185,12 +185,13 @@ export default function Translator() {
                       onValueChange={(value) => setLevel(value)}
                       style={{
                         width: 150,
-                        height: Platform.OS === "ios" ? 150 : 50,
+                        height: Platform.OS === "ios" ? 200 : 50,
                         color: "#fff",
                       }}
                       itemStyle={{ fontSize: 18, color: "#fff", width: 150 }}
                       mode="dropdown"
                     >
+                      <Picker.Item key="A0" label="A0" value="A0" />
                       <Picker.Item key="A1" label="A1" value="A1" />
                       <Picker.Item key="A2" label="A2" value="A2" />
                       <Picker.Item key="B1" label="B1" value="B1" />
