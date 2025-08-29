@@ -92,6 +92,7 @@ export default function Vocab() {
         setVerbs(data.Verbs);
         setAdjectives(data.Adjectives);
         setOther(data.Other);
+        setFlashCards(data.Nouns);
       } catch {}
     };
 
