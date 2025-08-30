@@ -13,9 +13,8 @@ export default function FlashCard({
   const [flipped, setFlipped] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
 
-  // Reset flip when flashCard changes
   useEffect(() => {
-    // Reset animation value to 0 (front side)
+
     flipAnim.setValue(0);
     setFlipped(false);
   }, [flashCard, flipAnim]);
