@@ -28,10 +28,12 @@ export default function FlashCard({
   const [flipped, setFlipped] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
+  const hasAutoPlayed = useRef(false);
 
   useEffect(() => {
     flipAnim.setValue(0);
     setFlipped(false);
+    hasAutoPlayed.current = false;
 
     const speakText = async (text: string) => {
       // Don't queue audio if already playing
@@ -65,14 +67,16 @@ export default function FlashCard({
       }
     };
 
-    if (autoplayAudio && !isPlayingAudio) {
+    // Only autoplay once when card first loads
+    if (autoplayAudio && !hasAutoPlayed.current) {
+      hasAutoPlayed.current = true;
       const text =
         showSentence && flashCard.example_filipino
           ? `${flashCard.filipino}, ${flashCard.example_filipino}`
           : flashCard.filipino;
       speakText(text);
     }
-  }, [flashCard, flipAnim, autoplayAudio, showSentence, isPlayingAudio]);
+  }, [autoplayAudio, flashCard, flipAnim, index, isPlayingAudio, showSentence]); // Only depend on flashCard and index changes
 
   const speakText = async (text: string) => {
     // Don't queue audio if already playing
@@ -309,7 +313,7 @@ export default function FlashCard({
   return (
     <TouchableWithoutFeedback onPress={flipCard}>
       <View style={styles.container}>
-        {/* Front Side */}
+        {/* Front Side - Bisaya (with TTS) */}
         <Animated.View
           style={[
             styles.card,
@@ -368,7 +372,7 @@ export default function FlashCard({
           </View>
         </Animated.View>
 
-        {/* Back Side */}
+        {/* Back Side - English (NO TTS) */}
         <Animated.View
           style={[
             styles.card,
@@ -383,24 +387,7 @@ export default function FlashCard({
             <Text style={styles.languageText}>English</Text>
           </View>
 
-          <TouchableOpacity
-            style={[
-              styles.soundButton,
-              styles.backSoundButton,
-              isPlayingAudio && styles.soundButtonDisabled,
-            ]}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            disabled={isPlayingAudio}
-            onPress={() => {
-              const text =
-                showSentence && flashCard.example_english
-                  ? `${flashCard.english}, ${flashCard.example_english}`
-                  : flashCard.english;
-              speakText(text);
-            }}
-          >
-            <Ionicons name="volume-high" size={20} color={colors.white[100]} />
-          </TouchableOpacity>
+          {/* No sound button on English side */}
 
           <Text
             style={[styles.mainText, styles.backMainText]}

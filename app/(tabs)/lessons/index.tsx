@@ -12,6 +12,7 @@ import {
   useColorScheme,
   Platform,
   StatusBar,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -58,6 +59,7 @@ export default function Lessons() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [scaleAnim] = useState(new Animated.Value(0.95));
   const [lessonProgress, setLessonProgress] = useState<LessonProgress>({});
+  const [resetModalVisible, setResetModalVisible] = useState(false);
 
   useEffect(() => {
     Animated.parallel([
@@ -101,6 +103,16 @@ export default function Lessons() {
       );
     } catch (error) {
       console.error("Error saving progress:", error);
+    }
+  };
+
+  const resetProgress = async () => {
+    try {
+      setLessonProgress({});
+      await AsyncStorage.removeItem(PROGRESS_STORAGE_KEY);
+      setResetModalVisible(false);
+    } catch (error) {
+      console.error("Error resetting progress:", error);
     }
   };
 
@@ -318,6 +330,9 @@ export default function Lessons() {
       alignItems: "center",
       marginBottom: 12,
     },
+    progressHeaderLeft: {
+      flex: 1,
+    },
     progressTitle: {
       fontSize: 18,
       fontWeight: "700",
@@ -327,6 +342,12 @@ export default function Lessons() {
       fontSize: 16,
       fontWeight: "600",
       color: colors.orange[600],
+    },
+    resetButton: {
+      marginLeft: 12,
+      padding: 8,
+      borderRadius: 8,
+      backgroundColor: colors.orange[500],
     },
     progressBarContainer: {
       height: 12,
@@ -357,10 +378,7 @@ export default function Lessons() {
       elevation: 4,
     },
     lessonCardCompleted: {
-      borderColor: colors.green[500] + "60",
-      backgroundColor: isDarkMode
-        ? colors.green[500] + "10"
-        : colors.green[500] + "08",
+      borderWidth: 2,
     },
     lessonCardLocked: {
       opacity: 0.6,
@@ -383,7 +401,6 @@ export default function Lessons() {
       position: "absolute",
       top: -4,
       right: -4,
-      backgroundColor: colors.green[500],
       borderRadius: 12,
       width: 24,
       height: 24,
@@ -398,7 +415,6 @@ export default function Lessons() {
     lessonTitle: {
       fontSize: 18,
       fontWeight: "700",
-      color: colors.text[100],
       marginBottom: 4,
     },
     lessonDescription: {
@@ -447,6 +463,57 @@ export default function Lessons() {
       color: colors.text[200],
       marginLeft: 6,
     },
+    modalOverlay: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0,0,0,0.6)",
+    },
+    modalContent: {
+      backgroundColor: colors.white[100],
+      borderRadius: 20,
+      padding: 28,
+      alignItems: "center",
+      width: "88%",
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.25,
+      shadowRadius: 16,
+      elevation: 12,
+    },
+    modalTitle: {
+      fontSize: 20,
+      fontWeight: "900",
+      marginVertical: 16,
+      textAlign: "center",
+      color: colors.text[400],
+    },
+    modalText: {
+      fontSize: 15,
+      marginBottom: 24,
+      textAlign: "center",
+      lineHeight: 22,
+      color: colors.text[300],
+    },
+    modalButtonRow: {
+      flexDirection: "row",
+      gap: 12,
+    },
+    modalButton: {
+      paddingVertical: 12,
+      paddingHorizontal: 24,
+      borderRadius: 12,
+      minWidth: 90,
+      alignItems: "center",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 6,
+      elevation: 3,
+    },
+    modalButtonText: {
+      fontWeight: "800",
+      fontSize: 15,
+    },
   });
 
   return (
@@ -474,10 +541,24 @@ export default function Lessons() {
             {/* Progress Section */}
             <View style={styles.progressSection}>
               <View style={styles.progressHeader}>
-                <Text style={styles.progressTitle}>Your Progress</Text>
+                <View style={styles.progressHeaderLeft}>
+                  <Text style={styles.progressTitle}>Your Progress</Text>
+                </View>
                 <Text style={styles.progressStats}>
                   {completedLessons}/{totalLessons}
                 </Text>
+                {completedLessons > 0 && (
+                  <TouchableOpacity
+                    style={styles.resetButton}
+                    onPress={() => setResetModalVisible(true)}
+                  >
+                    <Ionicons
+                      name="refresh"
+                      size={18}
+                      color={colors.white[100]}
+                    />
+                  </TouchableOpacity>
+                )}
               </View>
               <View style={styles.progressBarContainer}>
                 <Animated.View
@@ -498,7 +579,15 @@ export default function Lessons() {
                   key={lesson.id}
                   style={[
                     styles.lessonCard,
-                    isCompleted && styles.lessonCardCompleted,
+                    isCompleted && [
+                      styles.lessonCardCompleted,
+                      {
+                        borderColor: lesson.color + "80",
+                        backgroundColor: isDarkMode
+                          ? lesson.color + "15"
+                          : lesson.color + "10",
+                      },
+                    ],
                     lesson.isLocked && styles.lessonCardLocked,
                   ]}
                   disabled={lesson.isLocked}
@@ -518,7 +607,12 @@ export default function Lessons() {
                         color={lesson.color}
                       />
                       {isCompleted && (
-                        <View style={styles.completedBadge}>
+                        <View
+                          style={[
+                            styles.completedBadge,
+                            { backgroundColor: lesson.color },
+                          ]}
+                        >
                           <Ionicons
                             name="checkmark"
                             size={14}
@@ -528,7 +622,18 @@ export default function Lessons() {
                       )}
                     </View>
                     <View style={styles.lessonContent}>
-                      <Text style={styles.lessonTitle}>{lesson.title}</Text>
+                      <Text
+                        style={[
+                          styles.lessonTitle,
+                          {
+                            color: isCompleted
+                              ? lesson.color
+                              : colors.text[100],
+                          },
+                        ]}
+                      >
+                        {lesson.title}
+                      </Text>
                       <Text style={styles.lessonDescription}>
                         {lesson.description}
                       </Text>
@@ -550,9 +655,7 @@ export default function Lessons() {
                         style={[
                           styles.startButton,
                           {
-                            backgroundColor: isCompleted
-                              ? colors.green[500]
-                              : lesson.color,
+                            backgroundColor: lesson.color,
                           },
                         ]}
                       >
@@ -573,6 +676,59 @@ export default function Lessons() {
           </ScrollView>
         </Animated.View>
       </View>
+
+      {/* Reset Confirmation Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={resetModalVisible}
+        onRequestClose={() => setResetModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Ionicons name="warning" size={50} color={colors.orange[500]} />
+            <Text style={styles.modalTitle}>Reset Progress?</Text>
+            <Text style={styles.modalText}>
+              This will clear all your lesson progress. This action cannot be
+              undone.
+            </Text>
+            <View style={styles.modalButtonRow}>
+              <TouchableOpacity
+                onPress={() => setResetModalVisible(false)}
+                style={[
+                  styles.modalButton,
+                  {
+                    backgroundColor: colors.cream[300],
+                    shadowColor: colors.cream[400],
+                  },
+                ]}
+              >
+                <Text
+                  style={[styles.modalButtonText, { color: colors.text[400] }]}
+                >
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={resetProgress}
+                style={[
+                  styles.modalButton,
+                  {
+                    backgroundColor: colors.orange[500],
+                    shadowColor: colors.orange[500],
+                  },
+                ]}
+              >
+                <Text
+                  style={[styles.modalButtonText, { color: colors.white[100] }]}
+                >
+                  Reset
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
