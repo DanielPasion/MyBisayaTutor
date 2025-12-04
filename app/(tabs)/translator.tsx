@@ -203,17 +203,13 @@ export default function Translator() {
         if (selectedVoice) break;
       }
 
-      // If no similar voice found, use Indonesian from your list
+      // If no similar voice found, try to find any Indonesian voice
       if (!selectedVoice) {
         selectedVoice = voices.find(
-          (voice) => voice.identifier === "Google Bahasa Indonesia"
-        );
-      }
-
-      // Final fallback to Damayanti (Indonesian local voice)
-      if (!selectedVoice) {
-        selectedVoice = voices.find(
-          (voice) => voice.identifier === "Damayanti"
+          (voice) =>
+            voice.language.toLowerCase().includes("id") ||
+            voice.identifier.toLowerCase().includes("indonesia") ||
+            voice.identifier.toLowerCase().includes("damayanti")
         );
       }
 

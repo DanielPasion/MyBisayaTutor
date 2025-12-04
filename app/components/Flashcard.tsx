@@ -44,10 +44,37 @@ export default function FlashCard({
       try {
         setIsPlayingAudio(true);
 
-        // Use Indonesian voice for Filipino/Bisaya text
+        const voices = await Speech.getAvailableVoicesAsync();
+
+        // Try to find voices in order of preference for Filipino/Cebuano
+        const preferredLanguages = [
+          "fil", // Filipino
+          "tl", // Tagalog
+          "id", // Indonesian (phonetically similar)
+          "ms", // Malay (also similar)
+        ];
+
+        let selectedVoice = null;
+
+        for (const lang of preferredLanguages) {
+          selectedVoice = voices.find((voice) =>
+            voice.language.toLowerCase().includes(lang)
+          );
+          if (selectedVoice) break;
+        }
+
+        // If no similar voice found, try to find any Indonesian voice
+        if (!selectedVoice) {
+          selectedVoice = voices.find(
+            (voice) =>
+              voice.language.toLowerCase().includes("id") ||
+              voice.identifier.toLowerCase().includes("indonesia")
+          );
+        }
+
         await Speech.speak(text, {
-          language: "id-ID",
-          voice: "Google Bahasa Indonesia",
+          language: selectedVoice?.language || "id-ID",
+          voice: selectedVoice?.identifier,
           pitch: 1.0,
           rate: 0.85,
           onDone: () => {
@@ -76,7 +103,7 @@ export default function FlashCard({
           : flashCard.filipino;
       speakText(text);
     }
-  }, [autoplayAudio, flashCard, flipAnim, index, isPlayingAudio, showSentence]); // Only depend on flashCard and index changes
+  }, [autoplayAudio, flashCard, flipAnim, index, isPlayingAudio, showSentence]);
 
   const speakText = async (text: string) => {
     // Don't queue audio if already playing
@@ -87,10 +114,37 @@ export default function FlashCard({
     try {
       setIsPlayingAudio(true);
 
-      // Use Indonesian voice for Filipino/Bisaya text
+      const voices = await Speech.getAvailableVoicesAsync();
+
+      // Try to find voices in order of preference for Filipino/Cebuano
+      const preferredLanguages = [
+        "fil", // Filipino
+        "tl", // Tagalog
+        "id", // Indonesian (phonetically similar)
+        "ms", // Malay (also similar)
+      ];
+
+      let selectedVoice = null;
+
+      for (const lang of preferredLanguages) {
+        selectedVoice = voices.find((voice) =>
+          voice.language.toLowerCase().includes(lang)
+        );
+        if (selectedVoice) break;
+      }
+
+      // If no similar voice found, try to find any Indonesian voice
+      if (!selectedVoice) {
+        selectedVoice = voices.find(
+          (voice) =>
+            voice.language.toLowerCase().includes("id") ||
+            voice.identifier.toLowerCase().includes("indonesia")
+        );
+      }
+
       await Speech.speak(text, {
-        language: "id-ID",
-        voice: "Google Bahasa Indonesia",
+        language: selectedVoice?.language || "id-ID",
+        voice: selectedVoice?.identifier,
         pitch: 1.0,
         rate: 0.85,
         onDone: () => {
