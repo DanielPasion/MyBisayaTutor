@@ -131,7 +131,7 @@ export default function Lessons() {
       title: "Greetings & Basic Phrases",
       description: "Hello, goodbye, please, thank you",
       icon: "hand-right",
-      color: colors.green[300],
+      color: colors.green[500],
       isLocked: false,
     },
     {
@@ -139,7 +139,7 @@ export default function Lessons() {
       title: "Numbers",
       description: "Count from 1-20 and beyond",
       icon: "calculator",
-      color: colors.green[400],
+      color: colors.green[500],
       isLocked: false,
     },
     {
@@ -155,7 +155,7 @@ export default function Lessons() {
       title: "Colors",
       description: "Basic colors for descriptions",
       icon: "color-palette",
-      color: colors.green[600],
+      color: colors.green[500],
       isLocked: false,
     },
     {
@@ -163,7 +163,7 @@ export default function Lessons() {
       title: "Food & Drinks",
       description: "Common foods and dining vocab",
       icon: "restaurant",
-      color: colors.green[700],
+      color: colors.green[500],
       isLocked: false,
     },
     {
@@ -171,7 +171,7 @@ export default function Lessons() {
       title: "Body Parts",
       description: "Head, arms, legs, and more",
       icon: "body",
-      color: colors.orange[300],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -179,7 +179,7 @@ export default function Lessons() {
       title: "Common Verbs & Actions",
       description: "Go, come, eat, drink, sleep",
       icon: "flash",
-      color: colors.orange[400],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -187,7 +187,7 @@ export default function Lessons() {
       title: "Time Expressions",
       description: "Days, months, today, tomorrow",
       icon: "time",
-      color: colors.orange[400],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -235,7 +235,7 @@ export default function Lessons() {
       title: "Sentence Structure",
       description: "Word order and basic grammar rules",
       icon: "list",
-      color: colors.orange[700],
+      color: colors.orange[600],
       isLocked: false,
     },
     {
@@ -243,7 +243,7 @@ export default function Lessons() {
       title: "Focus Markers (Ang/Ng/Sa)",
       description: "Understanding case marking system",
       icon: "eye",
-      color: colors.orange[700],
+      color: colors.orange[600],
       isLocked: false,
     },
     {
@@ -251,7 +251,7 @@ export default function Lessons() {
       title: "Aspect Markers",
       description: "Completed, ongoing, and contemplated actions",
       icon: "reload",
-      color: colors.orange[700],
+      color: colors.orange[600],
       isLocked: false,
     },
     {
@@ -259,7 +259,7 @@ export default function Lessons() {
       title: "Linkers (Nga/Ug)",
       description: "Connecting words and phrases properly",
       icon: "link",
-      color: colors.orange[700],
+      color: colors.orange[600],
       isLocked: false,
     },
     {
@@ -267,7 +267,7 @@ export default function Lessons() {
       title: "Question Formation",
       description: "Who, what, where, when, why, how",
       icon: "help-circle",
-      color: colors.orange[700],
+      color: colors.orange[600],
       isLocked: false,
     },
     {
@@ -275,7 +275,7 @@ export default function Lessons() {
       title: "Negation Patterns",
       description: "Different ways to express 'not' and 'no'",
       icon: "close-circle",
-      color: colors.orange[700],
+      color: colors.orange[600],
       isLocked: false,
     },
     {
@@ -283,7 +283,7 @@ export default function Lessons() {
       title: "Affixes & Root Words",
       description: "Prefixes, infixes, and suffixes in Bisaya",
       icon: "cube",
-      color: colors.orange[700],
+      color: colors.orange[600],
       isLocked: false,
     },
   ];
@@ -295,93 +295,91 @@ export default function Lessons() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDarkMode
-        ? colors.cream[200] + "F0"
-        : colors.cream[100] + "F8",
+      backgroundColor: isDarkMode ? "#1a1a1a" : colors.cream[100],
     },
     contentContainer: {
       flex: 1,
-      backgroundColor: isDarkMode ? colors.cream[300] : colors.cream[100],
+      backgroundColor: isDarkMode ? "#1a1a1a" : colors.cream[100],
     },
     scrollContent: {
-      padding: 16,
+      padding: 20,
       paddingBottom: Platform.OS === "ios" ? 32 : 24,
     },
     progressSection: {
-      marginBottom: 24,
-      padding: 20,
-      backgroundColor: isDarkMode
-        ? colors.cream[100] + "F5"
-        : colors.white[100] + "F5",
-      borderRadius: 20,
-      borderWidth: 1.5,
-      borderColor: isDarkMode
-        ? colors.orange[400] + "50"
-        : colors.orange[300] + "60",
-      shadowColor: isDarkMode ? colors.orange[600] : colors.orange[400],
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.12,
-      shadowRadius: 6,
-      elevation: 4,
+      marginBottom: 28,
+      padding: 24,
+      backgroundColor: isDarkMode ? "#2a2a2a" : colors.white[100],
+      borderRadius: 24,
+      borderWidth: isDarkMode ? 0 : 1,
+      borderColor: colors.orange[300] + "30",
+      shadowColor: isDarkMode ? "#000" : colors.orange[400],
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: isDarkMode ? 0.4 : 0.08,
+      shadowRadius: 12,
+      elevation: 5,
     },
     progressHeader: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: 12,
+      marginBottom: 16,
     },
     progressHeaderLeft: {
       flex: 1,
     },
     progressTitle: {
-      fontSize: 18,
-      fontWeight: "700",
-      color: colors.text[100],
+      fontSize: 20,
+      fontWeight: "800",
+      color: isDarkMode ? "#ffffff" : colors.text[100],
+      marginBottom: 4,
     },
     progressStats: {
-      fontSize: 16,
-      fontWeight: "600",
-      color: colors.orange[600],
+      fontSize: 28,
+      fontWeight: "800",
+      color: colors.orange[500],
+      letterSpacing: 0.5,
     },
     resetButton: {
       marginLeft: 12,
-      padding: 8,
-      borderRadius: 8,
-      backgroundColor: colors.orange[500],
+      padding: 10,
+      borderRadius: 12,
+      backgroundColor: isDarkMode
+        ? colors.orange[600] + "30"
+        : colors.orange[500] + "20",
     },
     progressBarContainer: {
-      height: 12,
-      backgroundColor: colors.cream[300],
-      borderRadius: 6,
+      height: 10,
+      backgroundColor: isDarkMode ? "#3a3a3a" : colors.cream[200],
+      borderRadius: 8,
       overflow: "hidden",
     },
     progressBarFill: {
       height: "100%",
       backgroundColor: colors.orange[500],
-      borderRadius: 6,
+      borderRadius: 8,
     },
     lessonCard: {
       marginBottom: 16,
-      backgroundColor: isDarkMode
-        ? colors.cream[100] + "F5"
-        : colors.white[100] + "F5",
+      backgroundColor: isDarkMode ? "#2a2a2a" : colors.white[100],
       borderRadius: 20,
       padding: 20,
-      borderWidth: 1.5,
-      borderColor: isDarkMode
-        ? colors.orange[400] + "50"
-        : colors.orange[300] + "60",
-      shadowColor: isDarkMode ? colors.orange[600] : colors.orange[400],
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.12,
-      shadowRadius: 6,
-      elevation: 4,
+      borderWidth: isDarkMode ? 0 : 1,
+      borderColor: colors.cream[300],
+      shadowColor: isDarkMode ? "#000" : colors.text[400],
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: isDarkMode ? 0.3 : 0.06,
+      shadowRadius: 8,
+      elevation: 3,
     },
     lessonCardCompleted: {
       borderWidth: 2,
+      borderColor: isDarkMode ? colors.green[500] + "50" : colors.green[400],
+      backgroundColor: isDarkMode
+        ? colors.green[600] + "15"
+        : colors.green[400] + "08",
     },
     lessonCardLocked: {
-      opacity: 0.6,
+      opacity: 0.5,
     },
     lessonHeader: {
       flexDirection: "row",
@@ -389,9 +387,9 @@ export default function Lessons() {
       marginBottom: 12,
     },
     iconContainer: {
-      width: 56,
-      height: 56,
-      borderRadius: 14,
+      width: 60,
+      height: 60,
+      borderRadius: 16,
       alignItems: "center",
       justifyContent: "center",
       marginRight: 16,
@@ -399,27 +397,29 @@ export default function Lessons() {
     },
     completedBadge: {
       position: "absolute",
-      top: -4,
-      right: -4,
-      borderRadius: 12,
-      width: 24,
-      height: 24,
+      top: -6,
+      right: -6,
+      borderRadius: 14,
+      width: 28,
+      height: 28,
       alignItems: "center",
       justifyContent: "center",
-      borderWidth: 2,
-      borderColor: colors.white[100],
+      borderWidth: 3,
+      borderColor: isDarkMode ? "#2a2a2a" : colors.white[100],
+      backgroundColor: colors.green[500],
     },
     lessonContent: {
       flex: 1,
     },
     lessonTitle: {
-      fontSize: 18,
+      fontSize: 17,
       fontWeight: "700",
-      marginBottom: 4,
+      marginBottom: 6,
+      color: isDarkMode ? "#ffffff" : colors.text[100],
     },
     lessonDescription: {
       fontSize: 14,
-      color: colors.text[200],
+      color: isDarkMode ? "#a0a0a0" : colors.text[200],
       lineHeight: 20,
     },
     lessonFooter: {
@@ -429,18 +429,18 @@ export default function Lessons() {
       marginTop: 12,
       paddingTop: 12,
       borderTopWidth: 1,
-      borderTopColor: colors.orange[300] + "40",
+      borderTopColor: isDarkMode ? "#3a3a3a" : colors.cream[300],
     },
     startButton: {
       flexDirection: "row",
       alignItems: "center",
-      paddingHorizontal: 16,
-      paddingVertical: 8,
-      borderRadius: 12,
-      shadowColor: isDarkMode ? colors.orange[600] : colors.orange[400],
+      paddingHorizontal: 18,
+      paddingVertical: 10,
+      borderRadius: 14,
+      shadowColor: isDarkMode ? "#000" : colors.orange[500],
       shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.15,
-      shadowRadius: 4,
+      shadowOpacity: isDarkMode ? 0.4 : 0.2,
+      shadowRadius: 6,
       elevation: 3,
     },
     startButtonText: {
@@ -452,58 +452,60 @@ export default function Lessons() {
     lockedBadge: {
       flexDirection: "row",
       alignItems: "center",
-      backgroundColor: colors.cream[300],
-      paddingHorizontal: 12,
-      paddingVertical: 6,
+      backgroundColor: isDarkMode ? "#3a3a3a" : colors.cream[300],
+      paddingHorizontal: 14,
+      paddingVertical: 8,
       borderRadius: 12,
     },
     lockedText: {
       fontSize: 13,
       fontWeight: "600",
-      color: colors.text[200],
+      color: isDarkMode ? "#a0a0a0" : colors.text[200],
       marginLeft: 6,
     },
     modalOverlay: {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "rgba(0,0,0,0.6)",
+      backgroundColor: "rgba(0,0,0,0.7)",
     },
     modalContent: {
-      backgroundColor: colors.white[100],
-      borderRadius: 20,
-      padding: 28,
+      backgroundColor: isDarkMode ? "#2a2a2a" : colors.white[100],
+      borderRadius: 24,
+      padding: 32,
       alignItems: "center",
       width: "88%",
+      maxWidth: 400,
       shadowColor: "#000",
-      shadowOffset: { width: 0, height: 8 },
-      shadowOpacity: 0.25,
-      shadowRadius: 16,
-      elevation: 12,
+      shadowOffset: { width: 0, height: 10 },
+      shadowOpacity: 0.3,
+      shadowRadius: 20,
+      elevation: 15,
     },
     modalTitle: {
-      fontSize: 20,
+      fontSize: 22,
       fontWeight: "900",
       marginVertical: 16,
       textAlign: "center",
-      color: colors.text[400],
+      color: isDarkMode ? "#ffffff" : colors.text[400],
     },
     modalText: {
       fontSize: 15,
-      marginBottom: 24,
+      marginBottom: 28,
       textAlign: "center",
       lineHeight: 22,
-      color: colors.text[300],
+      color: isDarkMode ? "#a0a0a0" : colors.text[300],
     },
     modalButtonRow: {
       flexDirection: "row",
       gap: 12,
+      width: "100%",
     },
     modalButton: {
-      paddingVertical: 12,
+      flex: 1,
+      paddingVertical: 14,
       paddingHorizontal: 24,
-      borderRadius: 12,
-      minWidth: 90,
+      borderRadius: 14,
       alignItems: "center",
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
@@ -555,7 +557,7 @@ export default function Lessons() {
                     <Ionicons
                       name="refresh"
                       size={18}
-                      color={colors.white[100]}
+                      color={colors.orange[500]}
                     />
                   </TouchableOpacity>
                 )}
@@ -579,15 +581,7 @@ export default function Lessons() {
                   key={lesson.id}
                   style={[
                     styles.lessonCard,
-                    isCompleted && [
-                      styles.lessonCardCompleted,
-                      {
-                        borderColor: lesson.color + "80",
-                        backgroundColor: isDarkMode
-                          ? lesson.color + "15"
-                          : lesson.color + "10",
-                      },
-                    ],
+                    isCompleted && styles.lessonCardCompleted,
                     lesson.isLocked && styles.lessonCardLocked,
                   ]}
                   disabled={lesson.isLocked}
@@ -598,7 +592,11 @@ export default function Lessons() {
                     <View
                       style={[
                         styles.iconContainer,
-                        { backgroundColor: lesson.color + "20" },
+                        {
+                          backgroundColor: isDarkMode
+                            ? lesson.color + "25"
+                            : lesson.color + "20",
+                        },
                       ]}
                     >
                       <Ionicons
@@ -607,33 +605,17 @@ export default function Lessons() {
                         color={lesson.color}
                       />
                       {isCompleted && (
-                        <View
-                          style={[
-                            styles.completedBadge,
-                            { backgroundColor: lesson.color },
-                          ]}
-                        >
+                        <View style={styles.completedBadge}>
                           <Ionicons
                             name="checkmark"
-                            size={14}
+                            size={16}
                             color={colors.white[100]}
                           />
                         </View>
                       )}
                     </View>
                     <View style={styles.lessonContent}>
-                      <Text
-                        style={[
-                          styles.lessonTitle,
-                          {
-                            color: isCompleted
-                              ? lesson.color
-                              : colors.text[100],
-                          },
-                        ]}
-                      >
-                        {lesson.title}
-                      </Text>
+                      <Text style={styles.lessonTitle}>{lesson.title}</Text>
                       <Text style={styles.lessonDescription}>
                         {lesson.description}
                       </Text>
@@ -646,7 +628,7 @@ export default function Lessons() {
                         <Ionicons
                           name="lock-closed"
                           size={14}
-                          color={colors.text[200]}
+                          color={isDarkMode ? "#a0a0a0" : colors.text[200]}
                         />
                         <Text style={styles.lockedText}>Locked</Text>
                       </View>
@@ -698,13 +680,16 @@ export default function Lessons() {
                 style={[
                   styles.modalButton,
                   {
-                    backgroundColor: colors.cream[300],
-                    shadowColor: colors.cream[400],
+                    backgroundColor: isDarkMode ? "#3a3a3a" : colors.cream[300],
+                    shadowColor: isDarkMode ? "#000" : colors.cream[400],
                   },
                 ]}
               >
                 <Text
-                  style={[styles.modalButtonText, { color: colors.text[400] }]}
+                  style={[
+                    styles.modalButtonText,
+                    { color: isDarkMode ? "#ffffff" : colors.text[400] },
+                  ]}
                 >
                   Cancel
                 </Text>
