@@ -44,7 +44,7 @@ export default function Lesson7() {
       flexDirection: "row",
       alignItems: "center",
       padding: 16,
-      paddingTop: Platform.OS === "ios" ? 60 : 16,
+      paddingTop: 16,
       paddingBottom: 8,
     },
     backButtonText: {

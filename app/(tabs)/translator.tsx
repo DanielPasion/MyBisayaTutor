@@ -203,17 +203,13 @@ export default function Translator() {
         if (selectedVoice) break;
       }
 
-      // If no similar voice found, use Indonesian from your list
+      // If no similar voice found, try to find any Indonesian voice
       if (!selectedVoice) {
         selectedVoice = voices.find(
-          (voice) => voice.identifier === "Google Bahasa Indonesia"
-        );
-      }
-
-      // Final fallback to Damayanti (Indonesian local voice)
-      if (!selectedVoice) {
-        selectedVoice = voices.find(
-          (voice) => voice.identifier === "Damayanti"
+          (voice) =>
+            voice.language.toLowerCase().includes("id") ||
+            voice.identifier.toLowerCase().includes("indonesia") ||
+            voice.identifier.toLowerCase().includes("damayanti")
         );
       }
 
@@ -520,7 +516,11 @@ export default function Translator() {
   });
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+    >
       <StatusBar
         barStyle={isDarkMode ? "light-content" : "dark-content"}
         backgroundColor="transparent"
@@ -551,10 +551,7 @@ export default function Translator() {
           />
         ))}
 
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={styles.contentContainer}
-        >
+        <View style={styles.contentContainer}>
           <Header />
 
           <Animated.View
@@ -567,7 +564,8 @@ export default function Translator() {
             <ScrollView
               contentContainerStyle={styles.scrollContainer}
               showsVerticalScrollIndicator={false}
-              bounces={false}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="on-drag"
             >
               {/* Translation Direction Toggle */}
               <TouchableOpacity
@@ -621,6 +619,7 @@ export default function Translator() {
                   placeholderTextColor={colors.text[200]}
                   multiline
                   returnKeyType="send"
+                  blurOnSubmit={false}
                 />
 
                 {/* Action Buttons */}
@@ -764,7 +763,7 @@ export default function Translator() {
               </View>
             </ScrollView>
           </Animated.View>
-        </KeyboardAvoidingView>
+        </View>
       </View>
 
       {/* No Internet Modal */}
@@ -814,6 +813,6 @@ export default function Translator() {
           </View>
         </View>
       </Modal>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

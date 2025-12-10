@@ -78,6 +78,10 @@ export default function Vocab() {
   const [bounceAnim] = useState(new Animated.Value(1));
   const [pulseAnim] = useState(new Animated.Value(0));
 
+  // Track if the current card has already been autoplayed
+  const [hasAutoplayedCurrentCard, setHasAutoplayedCurrentCard] =
+    useState(false);
+
   useEffect(() => {
     loadProgress();
   }, []);
@@ -138,6 +142,13 @@ export default function Vocab() {
       setCardStatus("studying");
     }
   }, [studying]);
+
+  // Reset autoplay flag when card changes
+  useEffect(() => {
+    if (inGame) {
+      setHasAutoplayedCurrentCard(false);
+    }
+  }, [deckIndex, inGame]);
 
   const loadProgress = async () => {
     try {
@@ -237,6 +248,7 @@ export default function Vocab() {
     setDeck(shuffled);
     setDeckIndex(0);
     setCompleted(0);
+    setHasAutoplayedCurrentCard(false); // Reset autoplay flag when starting game
 
     setIGStudying(new Set(studying));
     setIGLearned(new Set(learned));
@@ -255,6 +267,7 @@ export default function Vocab() {
     setDeck([]);
     setDeckIndex(0);
     setInGame(false);
+    setHasAutoplayedCurrentCard(false); // Reset autoplay flag
 
     setShowCongrats(true);
   };
@@ -599,7 +612,7 @@ export default function Vocab() {
       alignItems: "center",
       justifyContent: "center",
       paddingVertical: 10,
-      paddingHorizontal: 20,
+      paddingHorizontal: 8,
       borderRadius: 20,
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.25,
@@ -607,11 +620,13 @@ export default function Vocab() {
       elevation: 6,
       borderWidth: 2,
       borderColor: "transparent",
+      minWidth: 0,
     },
     classifyButtonContent: {
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
       gap: 4,
     },
     classifyButtonText: {
@@ -619,6 +634,7 @@ export default function Vocab() {
       fontWeight: "900",
       fontSize: 8,
       letterSpacing: 0.1,
+      flexShrink: 1,
     },
     feedbackOverlay: {
       position: "absolute",
@@ -1206,10 +1222,12 @@ export default function Vocab() {
             <View style={styles.cardContainer}>
               {deck.length > 0 ? (
                 <FlashCard
+                  key={deckIndex}
                   index={deckIndex}
                   flashCard={deck[deckIndex]}
-                  autoplayAudio={autoplayAudio}
+                  autoplayAudio={autoplayAudio && !hasAutoplayedCurrentCard}
                   showSentence={showSentence}
+                  onAutoplayComplete={() => setHasAutoplayedCurrentCard(true)}
                 />
               ) : (
                 <View style={styles.centerContainer}>

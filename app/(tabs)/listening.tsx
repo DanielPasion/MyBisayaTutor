@@ -67,6 +67,8 @@ export default function Listening() {
   const [statsModalVisible, setStatsModalVisible] = useState(false);
   const [disableButtons, setDisableButtons] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | undefined>();
+  const [showNoInternetModal, setShowNoInternetModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [fadeAnim] = useState(new Animated.Value(0));
   const [scaleAnim] = useState(new Animated.Value(0.95));
@@ -207,12 +209,40 @@ export default function Listening() {
       const audioUrl = `${baseUrl}/listening/${selectedDifficulty}/audio/${randomIndex}.mp3`;
 
       const response = await fetch(sentenceUrl);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const sentence: Sentence = await response.json();
+
+      if (!sentence || !sentence.filipino || !sentence.english) {
+        throw new Error("Invalid sentence data received");
+      }
 
       setCurrentSentence(sentence);
       setAudioUri(audioUrl);
     } catch (error) {
       console.error("Error loading sentence:", error);
+
+      // Determine if it's a network error or other error
+      if (
+        error instanceof TypeError &&
+        error.message === "Network request failed"
+      ) {
+        setErrorMessage(
+          "No internet connection. Please check your network and try again."
+        );
+      } else {
+        setErrorMessage("Failed to load question. Please try again.");
+      }
+
+      setShowNoInternetModal(true);
+
+      // If we're in game mode and there's an error, exit the game
+      if (inGame) {
+        endGame();
+      }
     } finally {
       setIsLoading(false);
     }
@@ -252,6 +282,8 @@ export default function Listening() {
       await loadRandomSentence();
     } catch (error) {
       console.error("Error in setCorrect:", error);
+      setErrorMessage("An error occurred. Please try again.");
+      setShowNoInternetModal(true);
     } finally {
       setDisableButtons(false);
     }
@@ -275,6 +307,8 @@ export default function Listening() {
       await loadRandomSentence();
     } catch (error) {
       console.error("Error in setWrong:", error);
+      setErrorMessage("An error occurred. Please try again.");
+      setShowNoInternetModal(true);
     } finally {
       setDisableButtons(false);
     }
@@ -718,6 +752,49 @@ export default function Listening() {
       borderRadius: 65,
       borderWidth: 3,
       opacity: 0.6,
+    },
+    // Modal styles for error/no internet
+    errorModalContent: {
+      width: "100%",
+      maxWidth: 400,
+      backgroundColor: colors.cream[100],
+      borderRadius: 20,
+      padding: 24,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 10,
+      elevation: 10,
+    },
+    errorModalIconContainer: {
+      alignItems: "center",
+      marginBottom: 16,
+    },
+    errorModalTitle: {
+      fontSize: 20,
+      fontWeight: "700",
+      textAlign: "center",
+      marginBottom: 12,
+      color: colors.orange[700],
+    },
+    errorModalMessage: {
+      fontSize: 15,
+      textAlign: "center",
+      marginBottom: 20,
+      lineHeight: 22,
+      color: colors.text[300],
+    },
+    errorModalButton: {
+      paddingVertical: 14,
+      borderRadius: 12,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: colors.orange[500],
+    },
+    errorModalButtonText: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: colors.white[100],
     },
   });
 
@@ -1201,6 +1278,40 @@ export default function Listening() {
               >
                 Close
               </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Error/No Internet Modal */}
+      <Modal
+        visible={showNoInternetModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowNoInternetModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.errorModalContent}>
+            <View style={styles.errorModalIconContainer}>
+              <Ionicons
+                name="cloud-offline"
+                size={64}
+                color={colors.orange[500]}
+              />
+            </View>
+
+            <Text style={styles.errorModalTitle}>Connection Error</Text>
+
+            <Text style={styles.errorModalMessage}>
+              {errorMessage ||
+                "Please check your internet connection and try again."}
+            </Text>
+
+            <TouchableOpacity
+              style={styles.errorModalButton}
+              onPress={() => setShowNoInternetModal(false)}
+            >
+              <Text style={styles.errorModalButtonText}>OK</Text>
             </TouchableOpacity>
           </View>
         </View>

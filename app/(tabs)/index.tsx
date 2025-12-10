@@ -253,7 +253,7 @@ export default function HomeIndex() {
                   <TouchableOpacity
                     key={index}
                     style={styles.featureCard}
-                    onPress={() => router.push(feature.route)}
+                    onPress={() => router.push(feature.route as "/")}
                     activeOpacity={0.7}
                   >
                     <View
