@@ -121,7 +121,7 @@ export default function Header() {
         <TouchableOpacity
           style={styles.modalOverlay}
           activeOpacity={1}
-          onPressOut={toggleSettings}
+          onPress={toggleSettings}
         >
           <Animated.View
             style={[
@@ -131,6 +131,7 @@ export default function Header() {
                 backgroundColor: colors.cream["100"],
               },
             ]}
+            onStartShouldSetResponder={() => true}
           >
             <View style={styles.panelHandle} />
 
@@ -183,7 +184,9 @@ export default function Header() {
                     styles.resetButton,
                     { backgroundColor: colors.orange["500"] },
                   ]}
-                  onPress={() => setResetModalVisible(true)}
+                  onPress={() => {
+                    setResetModalVisible(true);
+                  }}
                 >
                   <Ionicons
                     name="trash-outline"
@@ -270,6 +273,7 @@ export default function Header() {
         transparent={true}
         animationType="fade"
         onRequestClose={() => setResetModalVisible(false)}
+        statusBarTranslucent={true}
       >
         <View style={styles.confirmModalOverlay}>
           <View

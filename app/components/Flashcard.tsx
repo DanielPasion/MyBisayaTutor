@@ -17,11 +17,13 @@ export default function FlashCard({
   flashCard,
   autoplayAudio = false,
   showSentence = true,
+  onAutoplayComplete,
 }: {
   index: number;
   flashCard: VocabWord;
   autoplayAudio?: boolean;
   showSentence?: boolean;
+  onAutoplayComplete?: () => void;
 }) {
   const { colors } = useThemeColors();
 
@@ -79,6 +81,10 @@ export default function FlashCard({
           rate: 0.85,
           onDone: () => {
             setIsPlayingAudio(false);
+            // Call the callback after autoplay completes
+            if (onAutoplayComplete) {
+              onAutoplayComplete();
+            }
           },
           onStopped: () => {
             setIsPlayingAudio(false);
@@ -103,7 +109,15 @@ export default function FlashCard({
           : flashCard.filipino;
       speakText(text);
     }
-  }, [autoplayAudio, flashCard, flipAnim, index, isPlayingAudio, showSentence]);
+  }, [
+    autoplayAudio,
+    flashCard,
+    flipAnim,
+    index,
+    isPlayingAudio,
+    showSentence,
+    onAutoplayComplete,
+  ]);
 
   const speakText = async (text: string) => {
     // Don't queue audio if already playing

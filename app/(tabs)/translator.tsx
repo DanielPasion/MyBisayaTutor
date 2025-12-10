@@ -516,7 +516,11 @@ export default function Translator() {
   });
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+    >
       <StatusBar
         barStyle={isDarkMode ? "light-content" : "dark-content"}
         backgroundColor="transparent"
@@ -547,10 +551,7 @@ export default function Translator() {
           />
         ))}
 
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={styles.contentContainer}
-        >
+        <View style={styles.contentContainer}>
           <Header />
 
           <Animated.View
@@ -563,7 +564,8 @@ export default function Translator() {
             <ScrollView
               contentContainerStyle={styles.scrollContainer}
               showsVerticalScrollIndicator={false}
-              bounces={false}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="on-drag"
             >
               {/* Translation Direction Toggle */}
               <TouchableOpacity
@@ -617,6 +619,7 @@ export default function Translator() {
                   placeholderTextColor={colors.text[200]}
                   multiline
                   returnKeyType="send"
+                  blurOnSubmit={false}
                 />
 
                 {/* Action Buttons */}
@@ -760,7 +763,7 @@ export default function Translator() {
               </View>
             </ScrollView>
           </Animated.View>
-        </KeyboardAvoidingView>
+        </View>
       </View>
 
       {/* No Internet Modal */}
@@ -810,6 +813,6 @@ export default function Translator() {
           </View>
         </View>
       </Modal>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

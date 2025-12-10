@@ -131,7 +131,7 @@ export default function Lessons() {
       title: "Greetings & Basic Phrases",
       description: "Hello, goodbye, please, thank you",
       icon: "hand-right",
-      color: colors.green[500],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -139,7 +139,7 @@ export default function Lessons() {
       title: "Numbers",
       description: "Count from 1-20 and beyond",
       icon: "calculator",
-      color: colors.green[500],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -147,7 +147,7 @@ export default function Lessons() {
       title: "Family Members",
       description: "Parents, siblings, relatives",
       icon: "people",
-      color: colors.green[500],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -155,7 +155,7 @@ export default function Lessons() {
       title: "Colors",
       description: "Basic colors for descriptions",
       icon: "color-palette",
-      color: colors.green[500],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -163,7 +163,7 @@ export default function Lessons() {
       title: "Food & Drinks",
       description: "Common foods and dining vocab",
       icon: "restaurant",
-      color: colors.green[500],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -211,7 +211,7 @@ export default function Lessons() {
       title: "Verb Conjugation",
       description: "Past, present, future tense forms",
       icon: "git-branch",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -219,7 +219,7 @@ export default function Lessons() {
       title: "Possession & Ownership",
       description: "My, your, his, her - showing ownership",
       icon: "key",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -227,7 +227,7 @@ export default function Lessons() {
       title: "Pronouns & Cases",
       description: "Subject, object, and possessive pronouns",
       icon: "person-circle",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -235,7 +235,7 @@ export default function Lessons() {
       title: "Sentence Structure",
       description: "Word order and basic grammar rules",
       icon: "list",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -243,7 +243,7 @@ export default function Lessons() {
       title: "Focus Markers (Ang/Ng/Sa)",
       description: "Understanding case marking system",
       icon: "eye",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -251,7 +251,7 @@ export default function Lessons() {
       title: "Aspect Markers",
       description: "Completed, ongoing, and contemplated actions",
       icon: "reload",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -259,7 +259,7 @@ export default function Lessons() {
       title: "Linkers (Nga/Ug)",
       description: "Connecting words and phrases properly",
       icon: "link",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -267,7 +267,7 @@ export default function Lessons() {
       title: "Question Formation",
       description: "Who, what, where, when, why, how",
       icon: "help-circle",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -275,7 +275,7 @@ export default function Lessons() {
       title: "Negation Patterns",
       description: "Different ways to express 'not' and 'no'",
       icon: "close-circle",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
     {
@@ -283,7 +283,7 @@ export default function Lessons() {
       title: "Affixes & Root Words",
       description: "Prefixes, infixes, and suffixes in Bisaya",
       icon: "cube",
-      color: colors.orange[600],
+      color: colors.orange[500],
       isLocked: false,
     },
   ];
@@ -295,11 +295,11 @@ export default function Lessons() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDarkMode ? "#1a1a1a" : colors.cream[100],
+      backgroundColor: colors.cream["500"],
     },
     contentContainer: {
       flex: 1,
-      backgroundColor: isDarkMode ? "#1a1a1a" : colors.cream[100],
+      backgroundColor: isDarkMode ? colors.cream[300] : colors.cream[100],
     },
     scrollContent: {
       padding: 20,
@@ -308,13 +308,17 @@ export default function Lessons() {
     progressSection: {
       marginBottom: 28,
       padding: 24,
-      backgroundColor: isDarkMode ? "#2a2a2a" : colors.white[100],
+      backgroundColor: isDarkMode
+        ? colors.cream[100] + "F5"
+        : colors.white[100] + "F5",
       borderRadius: 24,
-      borderWidth: isDarkMode ? 0 : 1,
-      borderColor: colors.orange[300] + "30",
-      shadowColor: isDarkMode ? "#000" : colors.orange[400],
+      borderWidth: 1.5,
+      borderColor: isDarkMode
+        ? colors.orange[400] + "50"
+        : colors.orange[300] + "60",
+      shadowColor: isDarkMode ? colors.orange[600] : colors.orange[400],
       shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: isDarkMode ? 0.4 : 0.08,
+      shadowOpacity: 0.15,
       shadowRadius: 12,
       elevation: 5,
     },
@@ -330,7 +334,7 @@ export default function Lessons() {
     progressTitle: {
       fontSize: 20,
       fontWeight: "800",
-      color: isDarkMode ? "#ffffff" : colors.text[100],
+      color: colors.text[400],
       marginBottom: 4,
     },
     progressStats: {
@@ -349,7 +353,9 @@ export default function Lessons() {
     },
     progressBarContainer: {
       height: 10,
-      backgroundColor: isDarkMode ? "#3a3a3a" : colors.cream[200],
+      backgroundColor: isDarkMode
+        ? colors.orange[400] + "30"
+        : colors.cream[200],
       borderRadius: 8,
       overflow: "hidden",
     },
@@ -360,22 +366,26 @@ export default function Lessons() {
     },
     lessonCard: {
       marginBottom: 16,
-      backgroundColor: isDarkMode ? "#2a2a2a" : colors.white[100],
+      backgroundColor: isDarkMode
+        ? colors.cream[100] + "F5"
+        : colors.white[100] + "F5",
       borderRadius: 20,
       padding: 20,
-      borderWidth: isDarkMode ? 0 : 1,
-      borderColor: colors.cream[300],
-      shadowColor: isDarkMode ? "#000" : colors.text[400],
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: isDarkMode ? 0.3 : 0.06,
+      borderWidth: 1.5,
+      borderColor: isDarkMode
+        ? colors.orange[400] + "50"
+        : colors.orange[300] + "60",
+      shadowColor: isDarkMode ? colors.orange[600] : colors.orange[400],
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.12,
       shadowRadius: 8,
-      elevation: 3,
+      elevation: 4,
     },
     lessonCardCompleted: {
       borderWidth: 2,
-      borderColor: isDarkMode ? colors.green[500] + "50" : colors.green[400],
+      borderColor: isDarkMode ? colors.green[500] + "80" : colors.green[400],
       backgroundColor: isDarkMode
-        ? colors.green[600] + "15"
+        ? colors.green[600] + "20"
         : colors.green[400] + "08",
     },
     lessonCardLocked: {
@@ -405,7 +415,9 @@ export default function Lessons() {
       alignItems: "center",
       justifyContent: "center",
       borderWidth: 3,
-      borderColor: isDarkMode ? "#2a2a2a" : colors.white[100],
+      borderColor: isDarkMode
+        ? colors.cream[100] + "F5"
+        : colors.white[100] + "F5",
       backgroundColor: colors.green[500],
     },
     lessonContent: {
@@ -415,11 +427,11 @@ export default function Lessons() {
       fontSize: 17,
       fontWeight: "700",
       marginBottom: 6,
-      color: isDarkMode ? "#ffffff" : colors.text[100],
+      color: colors.text[400],
     },
     lessonDescription: {
       fontSize: 14,
-      color: isDarkMode ? "#a0a0a0" : colors.text[200],
+      color: colors.text[300],
       lineHeight: 20,
     },
     lessonFooter: {
@@ -429,7 +441,9 @@ export default function Lessons() {
       marginTop: 12,
       paddingTop: 12,
       borderTopWidth: 1,
-      borderTopColor: isDarkMode ? "#3a3a3a" : colors.cream[300],
+      borderTopColor: isDarkMode
+        ? colors.orange[400] + "30"
+        : colors.cream[300],
     },
     startButton: {
       flexDirection: "row",
@@ -452,7 +466,9 @@ export default function Lessons() {
     lockedBadge: {
       flexDirection: "row",
       alignItems: "center",
-      backgroundColor: isDarkMode ? "#3a3a3a" : colors.cream[300],
+      backgroundColor: isDarkMode
+        ? colors.orange[400] + "30"
+        : colors.cream[300],
       paddingHorizontal: 14,
       paddingVertical: 8,
       borderRadius: 12,
@@ -460,7 +476,7 @@ export default function Lessons() {
     lockedText: {
       fontSize: 13,
       fontWeight: "600",
-      color: isDarkMode ? "#a0a0a0" : colors.text[200],
+      color: colors.text[300],
       marginLeft: 6,
     },
     modalOverlay: {
@@ -470,7 +486,9 @@ export default function Lessons() {
       backgroundColor: "rgba(0,0,0,0.7)",
     },
     modalContent: {
-      backgroundColor: isDarkMode ? "#2a2a2a" : colors.white[100],
+      backgroundColor: isDarkMode
+        ? colors.cream[100] + "F5"
+        : colors.white[100] + "F5",
       borderRadius: 24,
       padding: 32,
       alignItems: "center",
@@ -487,14 +505,14 @@ export default function Lessons() {
       fontWeight: "900",
       marginVertical: 16,
       textAlign: "center",
-      color: isDarkMode ? "#ffffff" : colors.text[400],
+      color: colors.text[400],
     },
     modalText: {
       fontSize: 15,
       marginBottom: 28,
       textAlign: "center",
       lineHeight: 22,
-      color: isDarkMode ? "#a0a0a0" : colors.text[300],
+      color: colors.text[300],
     },
     modalButtonRow: {
       flexDirection: "row",
@@ -538,7 +556,7 @@ export default function Lessons() {
             style={{ flex: 1 }}
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
-            bounces={false}
+            bounces={true}
           >
             {/* Progress Section */}
             <View style={styles.progressSection}>
@@ -594,7 +612,7 @@ export default function Lessons() {
                         styles.iconContainer,
                         {
                           backgroundColor: isDarkMode
-                            ? lesson.color + "25"
+                            ? lesson.color + "30"
                             : lesson.color + "20",
                         },
                       ]}
@@ -628,7 +646,7 @@ export default function Lessons() {
                         <Ionicons
                           name="lock-closed"
                           size={14}
-                          color={isDarkMode ? "#a0a0a0" : colors.text[200]}
+                          color={colors.text[300]}
                         />
                         <Text style={styles.lockedText}>Locked</Text>
                       </View>
@@ -680,16 +698,17 @@ export default function Lessons() {
                 style={[
                   styles.modalButton,
                   {
-                    backgroundColor: isDarkMode ? "#3a3a3a" : colors.cream[300],
-                    shadowColor: isDarkMode ? "#000" : colors.cream[400],
+                    backgroundColor: isDarkMode
+                      ? colors.orange[400] + "30"
+                      : colors.cream[300],
+                    shadowColor: isDarkMode
+                      ? colors.orange[600]
+                      : colors.cream[400],
                   },
                 ]}
               >
                 <Text
-                  style={[
-                    styles.modalButtonText,
-                    { color: isDarkMode ? "#ffffff" : colors.text[400] },
-                  ]}
+                  style={[styles.modalButtonText, { color: colors.text[400] }]}
                 >
                   Cancel
                 </Text>
