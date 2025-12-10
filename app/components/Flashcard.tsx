@@ -32,11 +32,15 @@ export default function FlashCard({
   const flipAnim = useRef(new Animated.Value(0)).current;
   const hasAutoPlayed = useRef(false);
 
+  // Reset card state when index or flashCard changes (new card appears)
   useEffect(() => {
     flipAnim.setValue(0);
     setFlipped(false);
     hasAutoPlayed.current = false;
+  }, [index, flashCard, flipAnim]);
 
+  // Handle autoplay in a separate effect
+  useEffect(() => {
     const speakText = async (text: string) => {
       // Don't queue audio if already playing
       if (isPlayingAudio) {
@@ -111,11 +115,10 @@ export default function FlashCard({
     }
   }, [
     autoplayAudio,
-    flashCard,
-    flipAnim,
-    index,
-    isPlayingAudio,
     showSentence,
+    flashCard.filipino,
+    flashCard.example_filipino,
+    isPlayingAudio,
     onAutoplayComplete,
   ]);
 

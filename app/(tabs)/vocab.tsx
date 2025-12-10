@@ -345,6 +345,7 @@ export default function Vocab() {
         return next;
       });
       setDeckIndex(0);
+      setHasAutoplayedCurrentCard(false);
     }, 600);
   };
 
